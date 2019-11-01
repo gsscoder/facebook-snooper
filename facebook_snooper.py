@@ -2,6 +2,7 @@ from mechanicalsoup import StatefulBrowser
 from lxml import html
 from lxml import etree
 import re
+import os.path
 
 
 __all__ = ['log_in', 'get_intro']
@@ -30,17 +31,23 @@ def log_in(username, password):
     except:
         return False 
 
+
 def get_intro(profile_id):
     """Retrieve introductory informations from given profile."""
     try:
-        url = f'{_base_url}/{profile_id}'
-        
-        _browser.open(url)
-
-        profile_html = str(_browser.get_current_page())
-        return _extract_intro(profile_html)
+        return _get_intro_html(profile_id)
     except:
         return None
+
+
+def _get_intro_html(profile_id):
+    url = f'{_base_url}/{profile_id}'
+    
+    _browser.open(url)
+
+    profile_html = str(_browser.get_current_page())
+    return profile_html
+
 
 def _extract_intro(profile_html):
     items = []
@@ -62,5 +69,16 @@ def _extract_intro(profile_html):
                         items.append(_strip_ml(fragment))
     return items
 
+
 def _strip_ml(text):
     return re.sub('<[^<]+?>', '', text)
+
+
+def _test_load_html(filename):
+    with open(os.path.join('.', 'test-data', f'{filename}.html'), 'r') as f:
+        return f.read() 
+
+
+def _test_save_html(filename, text):
+    with open(os.path.join('.', 'test-data', f'{filename}.html'), 'w') as f:
+        f.write(text)

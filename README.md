@@ -4,7 +4,7 @@ Scrape Facebook profile pages using a normal log in (without an API key). Inspir
 
 ## Install
 ```sh
-wget https://raw.githubusercontent.com/gsscoder/facebook-snooper/master/facebook_snooper.py
+$ wget https://raw.githubusercontent.com/gsscoder/facebook-snooper/master/facebook_snooper.py
 ```
 
 ## Usage
@@ -16,6 +16,24 @@ True
 >>> get_intro('fb.profile.id')
 ['Works at ...', 'Former consultant at ...', 'Studies at Columbia University', 'Went to UNC Chapel Hill', 'Lives in White Plains, New York', 'Joined August 2015', 'Followed by 1,068 people']
 >>> get_intro('valerio.roma.10')
+```
+
+## Test
+Create data:
+```sh
+$ cd facebook_snooper
+$ mkdir test-data
+```
+```python
+>>> from facebook_snooper import _test_save_html, _get_intro_html
+>>> from facebook_snooper import log_in
+>>> log_in('user@email.com', 'user_password')
+True
+>>> _test_save_html('profile', _get_intro_html('fb.profile.id'))
+```
+Execute:
+```sh
+$ python test.py
 ```
 
 ### Disclaimer
