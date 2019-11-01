@@ -1,6 +1,6 @@
 # Facebook Snooper
 
-Scrape Facebook profile pages using a normal log in (without an API key). Inspired by [facebook-scraper](https://github.com/kevinzg/facebook-scraper).
+Scrapes Facebook profile pages using a normal log in (without an API key). Inspired by [facebook-scraper](https://github.com/kevinzg/facebook-scraper).
 
 ## Install
 ```sh
@@ -15,11 +15,10 @@ $ wget https://raw.githubusercontent.com/gsscoder/facebook-snooper/master/facebo
 True
 >>> get_intro('fb.profile.id')
 ['Works at ...', 'Former consultant at ...', 'Studies at Columbia University', 'Went to UNC Chapel Hill', 'Lives in White Plains, New York', 'Joined August 2015', 'Followed by 1,068 people']
->>> get_intro('valerio.roma.10')
 ```
 
 ## Test
-Create data:
+Create test folder and data:
 ```sh
 $ cd facebook_snooper
 $ mkdir test-data
@@ -31,7 +30,7 @@ $ mkdir test-data
 True
 >>> _test_save_html('profile', _get_intro_html('fb.profile.id'))
 ```
-Execute:
+Execute test script:
 ```sh
 $ python test.py
 ```
