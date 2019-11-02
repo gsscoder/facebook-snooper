@@ -1,6 +1,6 @@
-from mechanicalsoup import StatefulBrowser
-from lxml import html
-from lxml import etree
+from mechanicalsoup import StatefulBrowser, \
+                           LinkNotFoundError
+from lxml import html, etree
 import re
 import os.path
 
@@ -13,31 +13,37 @@ _base_url = 'https://www.facebook.com'
 
 def log_in(username, password):
     """Log in to facebook with username and password."""
-    global _browser
-
     try:
-        _browser = StatefulBrowser()
-        _browser.addHeaders = [('User-Agent', 'Firefox'), \
-            ('Accept-Language', 'en-US,en;q=0.5')]
-        
-        _browser.open(_base_url)
+        _get_login_html(username, password)
 
         _browser.select_form('form[id="login_form"]')
         _browser['email'] = username
         _browser['pass'] =  password
         
         _browser.submit_selected()
-        return True
+        return _in_profile()
     except:
-        return False 
+        raise Exception(f'Unable to login "{username}" into facebook.') 
 
 
 def get_intro(profile_id):
     """Retrieve introductory informations from given profile."""
     try:
-        return _get_intro_html(profile_id)
+        return _extract_intro(_get_intro_html(profile_id))
     except:
         return None
+
+
+def _get_login_html(username, password):
+        global _browser
+
+        _browser = StatefulBrowser()
+        _browser.addHeaders = [('User-Agent', 'Firefox'), \
+            ('Accept-Language', 'en-US,en;q=0.5')]
+        
+        _browser.open(_base_url)
+
+        return str(_browser.get_current_page())
 
 
 def _get_intro_html(profile_id):
@@ -45,9 +51,15 @@ def _get_intro_html(profile_id):
     
     _browser.open(url)
 
-    profile_html = str(_browser.get_current_page())
-    return profile_html
+    return str(_browser.get_current_page())
 
+
+def _in_profile():
+    try:
+        _browser.select_form('form[action="/search/top/"]')
+        return True
+    except LinkNotFoundError:
+        return False
 
 def _extract_intro(profile_html):
     items = []
