@@ -4,7 +4,14 @@ Scrapes Facebook profile pages using a normal log in (without an API key). Inspi
 
 ## Install
 ```sh
-$ wget https://raw.githubusercontent.com/gsscoder/facebook-snooper/master/facebook_snooper.py
+# clone the repository
+$ git clone https://github.com/gsscoder/facebook-snooper.git
+
+# change the working directory
+$ cd facebook-snooper
+
+# install the requirements
+$ python3 -m pip install -r requirements.txt
 ```
 
 ## Usage
