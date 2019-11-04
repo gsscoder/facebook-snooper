@@ -6,6 +6,7 @@ import os.path
 
 
 __all__ = ['log_in', 'get_intro']
+__version__ = '0.1.0'
 
 
 _base_url = 'https://www.facebook.com'
