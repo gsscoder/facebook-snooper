@@ -15,6 +15,7 @@ import unittest
 from facebook_snooper import _test_load_html, _extract_intro, \
                              log_in
 
+
 class TestExtractIntro(unittest.TestCase):
     
     def test_extract_intro(self):

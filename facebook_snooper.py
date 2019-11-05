@@ -59,6 +59,13 @@ def _get_intro_html(profile_id):
     return str(_browser.get_current_page())
 
 
+def _get_search_html(query):
+    _browser.select_form('form[action="/search/top/"]')
+    _browser['q'] = query
+
+    _browser.submit_selected()
+    return str(_browser.get_current_page())
+
 def _in_profile():
     try:
         _browser.select_form('form[action="/search/top/"]')
