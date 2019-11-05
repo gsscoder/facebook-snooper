@@ -34,10 +34,11 @@ $ mkdir test-data
 ```
 ```python
 >>> from facebook_snooper import _test_save_html, _get_intro_html
->>> from facebook_snooper import log_in
+>>> from facebook_snooper import log_in, _get_search_html
 >>> log_in('user@email.com', 'user_password')
 True
 >>> _test_save_html('profile', _get_intro_html('fb.profile.id'))
+>>> _test_save_html('search', _get_search_html('your query'))
 ```
 Execute test script:
 ```sh

@@ -4,8 +4,8 @@ $ cd facebook_snooper
 $ mkdir test-data
 and populate it (choose a profile with at least one introductory item)
 $ python3
->>> from facebook_snooper import _test_save_html,
-    _get_intro_html, log_in
+>>> from facebook_snooper import _test_save_html, _get_intro_html
+>>> from facebook_snooper import log_in, _get_search_html
 >>> log_in('user@email.com', 'user_password')
 True
 >>> _test_save_html('profile', _get_intro_html('fb.profile.id'))
