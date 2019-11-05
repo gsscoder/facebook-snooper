@@ -5,7 +5,7 @@ import re
 import os.path
 
 
-__all__ = ['log_in', 'get_intro']
+__all__ = ['log_in', 'get_intro', 'search_profiles']
 __version__ = '0.1.0'
 
 
@@ -33,6 +33,15 @@ def get_intro(profile_id):
         return _extract_intro(_get_intro_html(profile_id))
     except:
         return None
+
+
+def search_profiles(query):
+    """Search profiles that match given query, returning a tuple with ID and URI."""
+    try:
+        results_html = _get_search_html(query)
+        return _extract_profiles(results_html)
+    except:
+        return []
 
 
 def _open_login_url(username, password):
@@ -66,12 +75,14 @@ def _get_search_html(query):
     _browser.submit_selected()
     return str(_browser.get_current_page())
 
+
 def _in_profile():
     try:
         _browser.select_form('form[action="/search/top/"]')
         return True
     except LinkNotFoundError:
         return False
+
 
 def _extract_intro(profile_html):
     items = []
@@ -94,8 +105,21 @@ def _extract_intro(profile_html):
     return items
 
 
-def _extract_search_result(search_html):
-    return []
+def _extract_profiles(html_text):
+    profiles = []
+    ix = 0
+    while True:
+        start_ix = html_text.find('profileURI:"', ix)
+        if start_ix < 0:
+            break
+        end_ix = html_text.find('"', start_ix + 12)
+        if end_ix > 0:
+            profile_info = html_text[start_ix : end_ix + 1]
+            profile_uri = profile_info[12:len(profile_info)-1]
+            profile_id = profile_uri.split('/')[3]
+            profiles.append((profile_id, profile_uri))
+        ix = end_ix
+    return profiles
 
 
 def _strip_ml(text):

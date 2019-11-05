@@ -20,7 +20,9 @@ $ python3 -m pip install -r requirements.txt
 >>> from facebook_snooper import get_intro
 >>> log_in('user@email.com', 'user_password')
 True
->>> get_intro('fb.profile.id')
+>>> search_profiles('johnny new york')
+[('johnny.profile.id', 'https://www.facebook.com/johnny.profile.id'), ('mark.profile.id', 'https://www.facebook.com/mark.profile.id')]
+>>> get_intro('johnny.profile.id')
 ['Works at ...', 'Former consultant at ...', 'Studies at Columbia University', 'Went to UNC Chapel Hill', 'Lives in White Plains, New York', 'Joined August 2015', 'Followed by 1,068 people']
 ```
 

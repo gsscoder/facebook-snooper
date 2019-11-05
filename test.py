@@ -9,11 +9,13 @@ $ python3
 >>> log_in('user@email.com', 'user_password')
 True
 >>> _test_save_html('profile', _get_intro_html('fb.profile.id'))
+>>> _test_save_html('search', _get_search_html('your query'))
 """
 
-import unittest
+
 from facebook_snooper import _test_load_html, _extract_intro, \
-                             _extract_search_result, log_in
+                             _extract_profiles, log_in
+import unittest
 
 
 class TestExtractIntro(unittest.TestCase):
@@ -25,11 +27,11 @@ class TestExtractIntro(unittest.TestCase):
         self.assertGreater(len(items), 0)
 
 
-class TestExtractSearch(unittest.TestCase):
+class TestExtractProfiles(unittest.TestCase):
 
-    def test_extract_search(self):
+    def test_extract_profiles(self):
         html = _test_load_html('search')
-        profiles = _extract_search_result(html)
+        profiles = _extract_profiles(html)
 
         self.assertGreater(len(profiles), 0)
 
