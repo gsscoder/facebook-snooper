@@ -94,6 +94,10 @@ def _extract_intro(profile_html):
     return items
 
 
+def _extract_search_result(search_html):
+    return []
+
+
 def _strip_ml(text):
     return re.sub('<[^<]+?>', '', text)
 
