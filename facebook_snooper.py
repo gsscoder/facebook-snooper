@@ -15,7 +15,7 @@ _base_url = 'https://www.facebook.com'
 def log_in(username, password):
     """Log in to facebook with username and password."""
     try:
-        _get_login_html(username, password)
+        _open_login_url(username, password)
 
         _browser.select_form('form[id="login_form"]')
         _browser['email'] = username
@@ -35,16 +35,20 @@ def get_intro(profile_id):
         return None
 
 
+def _open_login_url(username, password):
+    global _browser
+
+    _browser = StatefulBrowser()
+    _browser.addHeaders = [('User-Agent', 'Firefox'), \
+        ('Accept-Language', 'en-US,en;q=0.5')]
+
+    _browser.open(_base_url) 
+
+
 def _get_login_html(username, password):
-        global _browser
+    _open_login_url(username, password)
 
-        _browser = StatefulBrowser()
-        _browser.addHeaders = [('User-Agent', 'Firefox'), \
-            ('Accept-Language', 'en-US,en;q=0.5')]
-        
-        _browser.open(_base_url)
-
-        return str(_browser.get_current_page())
+    return str(_browser.get_current_page())
 
 
 def _get_intro_html(profile_id):
