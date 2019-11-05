@@ -1,7 +1,6 @@
 # Facebook Snooper
 
 Scrapes Facebook profile pages using a normal log in (without an API key). Inspired by [facebook-scraper](https://github.com/kevinzg/facebook-scraper).
-
 Built with [MechanicalSoup](https://github.com/MechanicalSoup/MechanicalSoup) and [lxml](https://github.com/lxml/lxml).
 
 ## Install
