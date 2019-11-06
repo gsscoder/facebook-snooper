@@ -17,8 +17,8 @@ $ python3 -m pip install -r requirements.txt
 
 ## Usage
 ```python
->>> from facebook_snooper import log_in
->>> from facebook_snooper import get_intro
+>>> from facebook_snooper import log_in, get_intro
+>>> from facebook_snooper import search_profiles
 >>> log_in('user@email.com', 'user_password')
 True
 >>> search_profiles('johnny new york')
