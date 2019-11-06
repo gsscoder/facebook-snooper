@@ -116,7 +116,8 @@ def _extract_profiles(html_text):
         if end_ix > 0:
             profile_info = html_text[start_ix : end_ix + 1]
             profile_uri = profile_info[12:len(profile_info)-1]
-            if not '/groups/' in profile_uri:
+            if not '/groups/' in profile_uri and \
+               not '/events/' in profile_uri:
                 profile_id = profile_uri.split('/')[3]
                 profiles.append((profile_id, profile_uri))
         ix = end_ix
