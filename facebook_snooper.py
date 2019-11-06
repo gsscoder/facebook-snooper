@@ -32,7 +32,7 @@ def get_intro(profile_id):
     try:
         return _extract_intro(_get_intro_html(profile_id))
     except:
-        return None
+        return []
 
 
 def search_profiles(query):
