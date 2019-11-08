@@ -18,6 +18,10 @@ from facebook_snooper import _test_load_html, _extract_intro, \
 import unittest
 
 
+# Set only_local to True to skip tests that connects to Facebook
+only_local = False
+
+
 class TestExtractIntro(unittest.TestCase):
     
     def test_extract_intro(self):
@@ -39,7 +43,8 @@ class TestExtractProfiles(unittest.TestCase):
 class TestLogIn(unittest.TestCase):
 
     def test_bad_login(self):
-        self.assertFalse(log_in('invalid','login'))
+        if not only_local:
+            self.assertFalse(log_in('invalid','login'))
 
 
 if __name__ == '__main__':
