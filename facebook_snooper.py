@@ -94,14 +94,9 @@ def _extract_intro(profile_html):
 
     tree = html.fromstring(ul_html)
 
-    for link in tree.xpath('//li'):
-        div0 = next(link.iterchildren())
-        for div1 in div0.iterchildren():
-            for div2 in div1.iterchildren():
-                for elem in div2.iterchildren():
-                    if elem.tag == 'div':
-                        fragment = etree.tostring(elem).decode("utf-8")
-                        items.append(_strip_ml(fragment))
+    for intro in tree.xpath('//li/*[1]/div/div/div'):
+        fragment = etree.tostring(intro).decode("utf-8")
+        items.append(_strip_ml(fragment))
     return items
 
 
