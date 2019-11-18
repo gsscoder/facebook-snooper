@@ -5,10 +5,6 @@ import re
 import os.path
 
 
-__all__ = ['log_in', 'get_intro', 'search_profiles']
-__version__ = '0.1.0'
-
-
 _base_url = 'https://www.facebook.com'
 
 

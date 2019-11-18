@@ -12,6 +12,9 @@ True
 >>> _test_save_html('search', _get_search_html('your query'))
 """
 
+import os
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from facebook_snooper import _test_load_html, _extract_intro, \
                              _extract_profiles, log_in
@@ -19,7 +22,7 @@ import unittest
 
 
 # Set only_local to True to skip tests that connects to Facebook
-only_local = False
+only_local = True
 
 
 class TestExtractIntro(unittest.TestCase):
