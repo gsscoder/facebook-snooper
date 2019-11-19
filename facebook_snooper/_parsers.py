@@ -1,5 +1,6 @@
 from lxml import html, \
                  etree
+import re
 from . import _utils
 
 
@@ -21,18 +22,11 @@ def parse_intro(html_text):
 
 def parse_search_result(html_text):
     profiles = []
-    ix = 0
-    while True:
-        start_ix = html_text.find('profileURI:"', ix)
-        if start_ix < 0:
-            break
-        end_ix = html_text.find('"', start_ix + 12)
-        if end_ix > 0:
-            profile_info = html_text[start_ix : end_ix + 1]
-            profile_uri = profile_info[12:len(profile_info)-1]
-            if not '/groups/' in profile_uri and \
-               not '/events/' in profile_uri:
-                profile_id = profile_uri.split('/')[3]
-                profiles.append((profile_id, profile_uri))
-        ix = end_ix
+    profileURIs = re.findall(r'profileURI:".+?"', html_text)
+    for profileURI in profileURIs:
+        profile_uri = profileURI[12:-1]
+        if not '/groups/' in profile_uri and \
+           not '/events/' in profile_uri:
+            profile_id = profile_uri.split('/')[3]
+            profiles.append((profile_id, profile_uri))
     return profiles
