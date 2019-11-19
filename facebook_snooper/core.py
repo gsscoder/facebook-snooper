@@ -56,7 +56,8 @@ class Session:
             profile_html = self._get_profile_html(profile_id)
             name  = self._get_current_title()
             intro =  _parsers.parse_intro(profile_html)
-            return name, intro
+            followers = _parsers.parse_followers(profile_html)
+            return name, followers, intro
         except:
             return None
 

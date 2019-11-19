@@ -4,22 +4,35 @@ import re
 
 
 def strip_ml(text):
-    return re.sub('<[^<]+?>', '', text)
+    return re.sub(r'<[^<]+?>', '', text)
+
+
+def parse_followers(html_text):
+    followers = ''
+    matches = re.findall(r'Follower:.+?<', html_text)
+    if matches:
+        followers = matches[0][10:-1]
+    return followers
 
 
 def parse_intro(html_text):
     items = []
+    ul_html = None
 
     start_ix = html_text.find('intro_container_id')
-    start_ix = html_text.find('<ul', start_ix)
-    end_ix = html_text.find('</ul', start_ix)
-    ul_html = html_text[start_ix : end_ix + 5]
+    if start_ix > -1:
+        start_ix = html_text.find('<ul', start_ix)
+        if start_ix > -1:
+            end_ix = html_text.find('</ul', start_ix)
+            if end_ix > -1:
+                ul_html = html_text[start_ix : end_ix + 5]
 
-    tree = html.fromstring(ul_html)
-
-    for intro in tree.xpath('//li/*[1]/div/div/div'):
-        fragment = etree.tostring(intro).decode("utf-8")
-        items.append(strip_ml(fragment))
+    if ul_html:
+        tree = html.fromstring(ul_html)
+        for intro in tree.xpath('//li/*[1]/div/div/div'):
+            fragment = etree.tostring(intro).decode("utf-8")
+            items.append(strip_ml(fragment))
+            
     return items
 
 

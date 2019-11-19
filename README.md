@@ -26,8 +26,13 @@ $ python3 -m pip install .
 True
 >>> fb.search_profiles('johnny new york')
 [('johnny.profile.id', 'https://www.facebook.com/johnny.profile.id'), ('mark.profile.id', 'https://www.facebook.com/mark.profile.id')]
->>> fb.get_intro('johnny.profile.id')
-('Johnny Smith', ['Works at ...', 'Former consultant at ...', 'Studies at Columbia University', 'Went to UNC Chapel Hill', 'Lives in White Plains, New York', 'Joined August 2015', 'Followed by 1,068 people'])
+>>> name, followers, intro = fb.profile_info('johnny.profile.id')
+>>> name
+'Johnny Smith'
+>>> followers
+78
+>>> intro
+['Works at ...', 'Former consultant at ...', 'Studies at Columbia University', 'Went to UNC Chapel Hill', 'Lives in White Plains, New York', 'Joined August 2015', 'Followed by 1,068 people']
 ```
 
 ## Test
@@ -46,7 +51,7 @@ True
 >>> fb.search_profiles('johnny new york')
 ...
 >>> utils.save_page('search', fb.current_html)
->>> fb.get_intro('johnny.profile.id')
+>>> fb.profile_info('johnny.profile.id')
 ...
 >>> utils.save_page('profile', fb.current_html)
 

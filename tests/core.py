@@ -18,8 +18,9 @@ class TestGetIntro(unittest.TestCase):
     def test_profile_info(self):
         profile = mock_session.profile_info('test')
         self.assertIsNotNone(profile)
-        name, intro = profile
+        name, followers, intro = profile
         self.assertGreater(len(name), 0)
+        self.assertGreater(len(followers), 0)
         self.assertGreater(len(intro), 0)
 
 
