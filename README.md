@@ -36,7 +36,7 @@ True
 ## Test
 Create test directory and data:
 ```sh
-$ cd facebook_snooper
+$ cd facebook-snooper
 $ mkdir tests/pages
 ```
 ```python
