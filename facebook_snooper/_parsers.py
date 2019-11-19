@@ -1,7 +1,10 @@
 from lxml import html, \
                  etree
 import re
-from . import _utils
+
+
+def strip_ml(text):
+    return re.sub('<[^<]+?>', '', text)
 
 
 def parse_intro(html_text):
@@ -16,13 +19,15 @@ def parse_intro(html_text):
 
     for intro in tree.xpath('//li/*[1]/div/div/div'):
         fragment = etree.tostring(intro).decode("utf-8")
-        items.append(_utils.strip_ml(fragment))
+        items.append(strip_ml(fragment))
     return items
 
 
 def parse_search_result(html_text):
     profiles = []
+
     profileURIs = re.findall(r'profileURI:".+?"', html_text)
+
     for profileURI in profileURIs:
         profile_uri = profileURI[12:-1]
         if not '/groups/' in profile_uri and \
