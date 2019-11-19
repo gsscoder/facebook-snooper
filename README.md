@@ -60,4 +60,5 @@ $ python3 tests/core.py
 - Please respect people's privacy and use it ethically.
 
 ### Notes
+- This is a pre-release, since it's under development API can change until stable version.
 - There is no guarantee that will work if scraped pages change too much.
