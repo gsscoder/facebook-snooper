@@ -1,2 +1,0 @@
-lxml>=4.4.1
-MechanicalSoup>=0.12.0

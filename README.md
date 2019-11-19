@@ -4,7 +4,7 @@ Scrapes Facebook profile pages and searches profiles using a normal log in (with
 Built with [MechanicalSoup](https://github.com/MechanicalSoup/MechanicalSoup) and [lxml](https://github.com/lxml/lxml).
 
 ## Install
-**NOTE**: Python 3.7.5 or higher is required.
+**NOTE**: Python 3.7 or higher is required.
 ```sh
 # clone the repository
 $ git clone https://github.com/gsscoder/facebook-snooper.git
@@ -12,11 +12,8 @@ $ git clone https://github.com/gsscoder/facebook-snooper.git
 # change the working directory
 $ cd facebook-snooper
 
-# install the requirements
-$ python3 -m pip install -r requirements.txt
-
-# copy to your project directory
-$ cp -r facebook_snooper $HOME/your/project/dir
+# install the package
+$ python3 -m pip install .
 ```
 
 ## Usage
