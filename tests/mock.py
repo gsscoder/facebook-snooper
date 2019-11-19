@@ -12,7 +12,10 @@ class MockSession(Session):
         with open(os.path.join(self.pages_dir, f'{filename}.html'), 'r') as f:
             return f.read() 
     
-    def _get_intro_html(self, profile_id):
+    def _get_current_title(self):
+        return "someone"
+
+    def _get_profile_html(self, profile_id):
         return self._load_html('profile')
 
     def _get_search_html(self, query):

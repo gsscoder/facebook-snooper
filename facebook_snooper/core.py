@@ -17,7 +17,7 @@ class Session:
 
     @property
     def current_html(self):
-        """Returns current page HTML for testing purposes."""
+        """Current page HTML for testing purposes."""
         return self._current_html
 
     @property
@@ -29,7 +29,11 @@ class Session:
             raise SnooperException("No active connection or valid login")
 
     @abstractmethod
-    def _get_intro_html(self, profile_id):
+    def _get_current_title(self):
+        pass
+
+    @abstractmethod
+    def _get_profile_html(self, profile_id):
         pass
 
     @abstractmethod
@@ -45,11 +49,14 @@ class Session:
         """Log in to facebook with username and password."""
         pass
 
-    def get_intro(self, profile_id):
-        """Retrieve introductory informations from given profile."""
+    def profile_info(self, profile_id):
+        """Retrieve informations for a given profile."""
         self._ensure_connected()
         try:
-            return _parsers.parse_intro(self._get_intro_html(profile_id))
+            profile_html = self._get_profile_html(profile_id)
+            name  = self._get_current_title()
+            intro =  _parsers.parse_intro(profile_html)
+            return name, intro
         except:
             return None
 
@@ -83,7 +90,10 @@ class _FacebookSession(Session):
              self._connected = False
         return self._connected
 
-    def _get_intro_html(self, profile_id):
+    def _get_current_title(self):
+        return self._browser.get_current_page().find('title').text
+
+    def _get_profile_html(self, profile_id):
         url = f'{self._base_url}/{profile_id}'
         self._browser.open(url)
         self._current_html = str(self._browser.get_current_page())

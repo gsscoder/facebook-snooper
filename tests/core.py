@@ -15,9 +15,12 @@ mock_session : Session = MockSession()
 
 
 class TestGetIntro(unittest.TestCase):
-    def test_get_intro(self):
-        items = mock_session.get_intro('test')
-        self.assertGreater(len(items), 0)
+    def test_profile_info(self):
+        profile = mock_session.profile_info('test')
+        self.assertIsNotNone(profile)
+        name, intro = profile
+        self.assertGreater(len(name), 0)
+        self.assertGreater(len(intro), 0)
 
 
 class TestSearchProfiles(unittest.TestCase):
