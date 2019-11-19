@@ -14,6 +14,9 @@ $ cd facebook-snooper
 
 # install the requirements
 $ python3 -m pip install -r requirements.txt
+
+# copy to your project directory
+$ cp -r facebook_snooper $HOME/your/project/dir
 ```
 
 ## Usage
