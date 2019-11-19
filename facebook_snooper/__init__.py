@@ -1,11 +1,7 @@
-from .core import log_in, get_intro, search_profiles, \
-                  _extract_profiles, _extract_intro, \
-                  _test_load_html, _test_save_html
+from .core import Session
 
 
 __all__ = [
-    'log_in', 'get_intro', 'search_profiles',
-    '_extract_profiles', '_extract_intro',
-    '_test_load_html', '_test_save_html'
+    'Session'
     ]
-__version__ = '0.1.0'
+__version__ = '0.2.0'
