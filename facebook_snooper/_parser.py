@@ -1,7 +1,7 @@
-from lxml import html, \
+from lxml import html as lxml_html, \
                  etree
 import re
-from html import unescape
+import html
 from . import _text
 
 
@@ -9,7 +9,7 @@ def parse_image(html_text):
     image_link = ''
     matches = re.findall(r'photoContainer.+?img.+?src="(.+?)"', html_text)
     if matches:
-        image_link = unescape(matches[0])
+        image_link = html.unescape(matches[0])
     return image_link
 
 
@@ -30,7 +30,7 @@ def parse_intro(html_text):
         ul_html = matches[0][20:-4]
 
     if ul_html:
-        tree = html.fromstring(ul_html)
+        tree = lxml_html.fromstring(ul_html)
         for intro in tree.xpath('//li/*[1]/div/div/div'):
             fragment = etree.tostring(intro).decode("utf-8")
             items.append(_text.strip_ml(fragment))           
@@ -44,7 +44,7 @@ def parse_search_result(html_text):
 
     if profileURIs:
         for profileURI in profileURIs:
-            profile_uri = unescape(profileURI[12:-1])
+            profile_uri = html.unescape(profileURI[12:-1])
             if not '/groups/' in profile_uri and \
             not '/events/' in profile_uri:
                 profile_id = _text.get_profile_id(profile_uri)
