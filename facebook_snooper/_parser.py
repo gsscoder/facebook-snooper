@@ -19,13 +19,9 @@ def parse_intro(html_text):
     items = []
     ul_html = None
 
-    start_ix = html_text.find('intro_container_id')
-    if start_ix > -1:
-        start_ix = html_text.find('<ul', start_ix)
-        if start_ix > -1:
-            end_ix = html_text.find('</ul', start_ix)
-            if end_ix > -1:
-                ul_html = html_text[start_ix : end_ix + 5]
+    matches = re.findall(r'intro_container_id.+?</ul', html_text)
+    if matches:
+        ul_html = matches[0][20:-4]
 
     if ul_html:
         tree = html.fromstring(ul_html)
