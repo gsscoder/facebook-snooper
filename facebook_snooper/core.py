@@ -4,7 +4,7 @@ import os.path
 from mechanicalsoup import StatefulBrowser, \
                            LinkNotFoundError
 from . import _parser
-
+from . import _text
 
 class SnooperException(Exception):
     pass
@@ -54,7 +54,7 @@ class Session:
         self._ensure_connected()
         try:
             profile_html = self._get_profile_html(profile_id)
-            name  = self._get_current_title()
+            name  = _text.sanitize_title(self._get_current_title())
             intro =  _parser.parse_intro(profile_html)
             followers = _parser.parse_followers(profile_html)
             return name, followers, intro
