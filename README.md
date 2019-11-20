@@ -19,7 +19,7 @@ $ python3 -m pip install .
 ## Usage
 ```python
 >>> from facebook_snooper import Session
->>> fb = Session.Default()
+>>> fb = Session.default()
 >>> fb
 <facebook_snooper.core._FacebookSession object at 0x10ff45f50>
 >>> fb.log_in('user@email.com', 'user_password')
@@ -44,7 +44,7 @@ $ mkdir tests/pages
 ```python
 >>> from facebook_snooper import Session
 >>> from tests import utils
->>> fb = Session.Default()
+>>> fb = Session.default()
 >>> fb.log_in('user@email.com', 'user_password')
 True
 >>> utils.save_page('login', fb.current_html

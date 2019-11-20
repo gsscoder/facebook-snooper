@@ -3,7 +3,7 @@ from abc import ABC, \
 import os.path
 from mechanicalsoup import StatefulBrowser, \
                            LinkNotFoundError
-from . import _parsers
+from . import _parser
 
 
 class SnooperException(Exception):
@@ -41,7 +41,7 @@ class Session:
         pass
 
     @staticmethod
-    def Default():
+    def default():
         return _FacebookSession()
 
     @abstractmethod
@@ -55,8 +55,8 @@ class Session:
         try:
             profile_html = self._get_profile_html(profile_id)
             name  = self._get_current_title()
-            intro =  _parsers.parse_intro(profile_html)
-            followers = _parsers.parse_followers(profile_html)
+            intro =  _parser.parse_intro(profile_html)
+            followers = _parser.parse_followers(profile_html)
             return name, followers, intro
         except:
             return None
@@ -65,7 +65,7 @@ class Session:
         """Search profiles that match given query, returning a tuple with ID and URI."""
         self._ensure_connected()
         try:
-            return _parsers.parse_search_result(self._get_search_html(query))
+            return _parser.parse_search_result(self._get_search_html(query))
         except:
             return None
 
