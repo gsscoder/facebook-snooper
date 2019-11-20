@@ -7,6 +7,12 @@ def strip_ml(text):
     return re.sub(r'<[^<]+?>', '', text)
 
 
+def get_profile_id(uri):
+    chunk = uri.split('/')[3]
+    if 'profile.php?id=' in uri:
+         chunk = chunk.split('?')[1].split('=')[1]
+    return chunk
+
 def parse_followers(html_text):
     followers = ''
     matches = re.findall(r'Follower:.+?<', html_text)
@@ -40,6 +46,6 @@ def parse_search_result(html_text):
         profile_uri = profileURI[12:-1]
         if not '/groups/' in profile_uri and \
            not '/events/' in profile_uri:
-            profile_id = profile_uri.split('/')[3]
+            profile_id = get_profile_id(profile_uri)
             profiles.append((profile_id, profile_uri))
     return profiles
