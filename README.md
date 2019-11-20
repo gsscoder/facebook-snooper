@@ -24,15 +24,17 @@ $ python3 -m pip install .
 <facebook_snooper.core._FacebookSession object at 0x10ff45f50>
 >>> fb.log_in('user@email.com', 'user_password')
 True
->>> fb.search_profiles('johnny new york')
-[('johnny.profile.id', 'https://www.facebook.com/johnny.profile.id'), ('mark.profile.id', 'https://www.facebook.com/mark.profile.id')]
->>> name, followers, intro = fb.profile_info('johnny.profile.id')
+>>> fb.search_profiles('frank new york')
+[('frankpunixh', 'https://www.facebook.com/frankpunixh'), ('frankbruninyt', 'https://www.facebook.com/frankbruninyt')]
+>>> name, image_link, followers, intro = fb.profile_info('frankbruninyt')
 >>> name
-'Johnny Smith'
+'Frank Bruni'
+>>> image_link
+'https://scontent-fco1-1.xx.fbcdn.net/v/t1.0-1/p160x160/49342020_10157005134417363_1173260116078624768_o.jpg?_nc_cat=101&_nc_oc=AQliVuLJdFWX1at-6TPqNRWj3_T6I-cJvESxIfPvcFD1NNjRMGaDr0m8XUKZOwY3_kA&_nc_ht=scontent-fco1-1.xx&oh=c658885ef831fdcd1a7f7b6f3faa958d&oe=5E559A48'
 >>> followers
-78
+'234.994'
 >>> intro
-['Works at ...', 'Former consultant at ...', 'Studies at Columbia University', 'Went to UNC Chapel Hill', 'Lives in White Plains, New York', 'Joined August 2015', 'Followed by 1,068 people']
+['Works at The New York Times', 'Studied at Columbia University', 'Studied at UNC Chapel Hill', 'Went to Loomis Chaffee', 'Went to Loomis Chaffee, Windsor, Conn.', 'Lives in New York, New York', 'From White Plains, New York', 'Followed by 234,994 people']
 ```
 
 ## Test
@@ -48,10 +50,10 @@ $ mkdir tests/pages
 >>> fb.log_in('user@email.com', 'user_password')
 True
 >>> utils.save_page('login', fb.current_html
->>> fb.search_profiles('johnny new york')
+>>> fb.search_profiles('frank new york')
 ...
 >>> utils.save_page('search', fb.current_html)
->>> fb.profile_info('johnny.profile.id')
+>>> fb.profile_info('frankbruninyt')
 ...
 >>> utils.save_page('profile', fb.current_html)
 

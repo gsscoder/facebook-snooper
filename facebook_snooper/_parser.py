@@ -1,7 +1,17 @@
 from lxml import html, \
                  etree
 import re
+from html import unescape
 from . import _text
+
+
+def parse_image(html_text):
+    image_link = ''
+    matches = re.findall(r'photoContainer.+?img.+?src="(.+?)"', html_text)
+    if matches:
+        image_link = unescape(matches[0])
+    return image_link
+
 
 def parse_followers(html_text):
     followers = ''
@@ -32,10 +42,11 @@ def parse_search_result(html_text):
 
     profileURIs = re.findall(r'profileURI:".+?"', html_text)
 
-    for profileURI in profileURIs:
-        profile_uri = profileURI[12:-1]
-        if not '/groups/' in profile_uri and \
-           not '/events/' in profile_uri:
-            profile_id = _text.get_profile_id(profile_uri)
-            profiles.append((profile_id, profile_uri))
+    if profileURIs:
+        for profileURI in profileURIs:
+            profile_uri = unescape(profileURI[12:-1])
+            if not '/groups/' in profile_uri and \
+            not '/events/' in profile_uri:
+                profile_id = _text.get_profile_id(profile_uri)
+                profiles.append((profile_id, profile_uri))
     return profiles
