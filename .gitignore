@@ -1,6 +1,7 @@
 # Custom
 tests/pages/
 .DS_Store
+dump.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
