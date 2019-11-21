@@ -24,8 +24,9 @@ $ python3 -m pip install .
 <facebook_snooper.core._FacebookSession object at 0x10ff45f50>
 >>> fb.log_in('user@email.com', 'user_password')
 True
->>> fb.search_profiles('frank new york')
-[('frankpunixh', 'https://www.facebook.com/frankpunixh'), ('frankbruninyt', 'https://www.facebook.com/frankbruninyt')]
+>>> fb.search('frank new york')
+[('frank.cisneros.56', 'hubs', 'https://www.facebook.com/frank.cisneros.56'),
+ ('frankbruninyt', 'Frank Cisneros', 'https://www.facebook.com/frankbruninyt')]
 >>> name, image_link, followers, intro = fb.profile_info('frankbruninyt')
 >>> name
 'Frank Bruni'
@@ -50,7 +51,7 @@ $ mkdir tests/pages
 >>> fb.log_in('user@email.com', 'user_password')
 True
 >>> utils.save_page('login', fb.current_html
->>> fb.search_profiles('frank new york')
+>>> fb.search('frank new york')
 ...
 >>> utils.save_page('search', fb.current_html)
 >>> fb.profile_info('frankbruninyt')
