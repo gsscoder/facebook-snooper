@@ -33,7 +33,8 @@ def parse_intro(html_text):
         tree = lxml_html.fromstring(ul_html)
         for intro in tree.xpath('//li/*[1]/div/div/div'):
             fragment = etree.tostring(intro).decode("utf-8")
-            items.append(_text.strip_ml(fragment))           
+            info = html.unescape(_text.strip_ml(fragment))
+            items.append(info)           
     return items
 
 
