@@ -38,15 +38,18 @@ def parse_intro(html_text):
 
 
 def parse_search_result(html_text):
-    profiles = []
+    results = []
 
+    # Rip JavaScript dictionary data
     profileURIs = re.findall(r'profileURI:".+?"', html_text)
+    texts = re.findall(r'text:".+?"', html_text)
 
     if profileURIs:
-        for profileURI in profileURIs:
+        for i, profileURI in enumerate(profileURIs):
             profile_uri = html.unescape(profileURI[12:-1])
             if not '/groups/' in profile_uri and \
             not '/events/' in profile_uri:
                 profile_id = _text.get_profile_id(profile_uri)
-                profiles.append((profile_id, profile_uri))
-    return profiles
+                profile_name = texts[i][6:-1]
+                results.append((profile_id, profile_name, profile_uri))
+    return results

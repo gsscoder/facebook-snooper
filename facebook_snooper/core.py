@@ -62,8 +62,8 @@ class Session:
         except:
             return None
 
-    def search_profiles(self, query):
-        """Search profiles that match given query, returning a tuple with ID and URI."""
+    def search(self, query):
+        """Execute search of a given text returning a tuple with ID, description and URI."""
         self._ensure_connected()
         try:
             return _parser.parse_search_result(self._get_search_html(query))

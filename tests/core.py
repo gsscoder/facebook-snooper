@@ -25,10 +25,10 @@ class TestGetIntro(unittest.TestCase):
         self.assertGreater(len(intro), 0)
 
 
-class TestSearchProfiles(unittest.TestCase):
+class TestSearch(unittest.TestCase):
     def test_search_profiles(self):
-        profiles = mock_session.search_profiles('test')
-        self.assertGreater(len(profiles), 0)
+        results = mock_session.search('test')
+        self.assertGreater(len(results), 0)
 
 
 if __name__ == '__main__':
