@@ -21,9 +21,9 @@ $ python3 -m pip install .
 >>> import facebook_snooper
 >>> fb = facebook_snooper.default_session()
 >>> fb
-<facebook_snooper.core.session.FacebookSession object at 0x10cf22290>
+<facebook_snooper.core.session.FacebookSession object at 0x106f64590>
 >>> fb.log_in('user@email.com', 'user_password')
-True
+<facebook_snooper.core.session.FacebookSession object at 0x106f64590>
 >>> fb.search('frank new york')
 [('frank.cisneros.56', 'hubs', 'https://www.facebook.com/frank.cisneros.56'),
  ('frankbruninyt', 'Frank Cisneros', 'https://www.facebook.com/frankbruninyt')]
@@ -35,7 +35,9 @@ True
 >>> followers
 '234994'
 >>> intro
-['Works at The New York Times', 'Studied at Columbia University', 'Studied at UNC Chapel Hill', 'Went to Loomis Chaffee', 'Went to Loomis Chaffee, Windsor, Conn.', 'Lives in New York, New York', 'From White Plains, New York', 'Followed by 234,994 people']
+['Works at The New York Times', 'Studied at Columbia University',
+ 'Studied at UNC Chapel Hill', 'Went to Loomis Chaffee', 'Went to Loomis Chaffee, Windsor, Conn.',
+ 'Lives in New York, New York', 'From White Plains, New York', 'Followed by 234,994 people']
 ```
 
 ## Test

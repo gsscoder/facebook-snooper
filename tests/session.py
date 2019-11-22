@@ -14,7 +14,7 @@ from facebook_snooper import Session
 class MockSession(Session):
     def __init__(self):
         super()
-        self._connected = True
+        self._connected = False
         self.pages_dir = os.path.join('.', 'tests/pages')
 
     def _load_html(self, filename):
@@ -31,7 +31,8 @@ class MockSession(Session):
         return self._load_html('search')
 
     def log_in(self, username, password):
-        return self._connected
+        self._connected = True
+        return self
 
 
 class SessionTestCase(unittest.TestCase):
