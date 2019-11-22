@@ -1,8 +1,10 @@
-from lxml import html as lxml_html, \
-                 etree
 import re
 import html
-from . import _text
+from lxml import html as lxml_html, \
+                 etree
+from ._text import strip_ml, \
+                   sanitize_followers, \
+                   get_profile_id
 
 
 def parse_image(html_text):
@@ -18,7 +20,7 @@ def parse_followers(html_text):
     followers_re = re.compile(r'frankbruninyt/followers.*people', re.MULTILINE)
     matches = followers_re.findall(html_text)
     if matches:
-        followers = _text.sanitize_followers(matches[0])
+        followers = sanitize_followers(matches[0])
         followers = followers if followers.isdigit() else ''
     return followers
 
@@ -33,7 +35,7 @@ def parse_intro(html_text):
         tree = lxml_html.fromstring(ul_html)
         for intro in tree.xpath('//li/*[1]/div/div/div'):
             fragment = etree.tostring(intro).decode("utf-8")
-            info = html.unescape(_text.strip_ml(fragment))
+            info = html.unescape(strip_ml(fragment))
             items.append(info)           
     return items
 
@@ -48,7 +50,7 @@ def parse_search_result(html_text):
             profile_uri = html.unescape(profileURI[12:-1])
             if not '/groups/' in profile_uri and \
             not '/events/' in profile_uri:
-                profile_id = _text.get_profile_id(profile_uri)
+                profile_id = get_profile_id(profile_uri)
                 profile_name = texts[i][6:-1]
                 results.append((profile_id, profile_name, profile_uri))
     return results

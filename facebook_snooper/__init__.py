@@ -1,6 +1,2 @@
-from .core import Session
-
-
-__all__ = [
-    'Session'
-    ]
+from .__version__ import __version__
+from .core.session import Session

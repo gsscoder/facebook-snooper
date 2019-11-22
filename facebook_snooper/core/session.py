@@ -6,6 +6,8 @@ from mechanicalsoup import StatefulBrowser, \
 from . import _parser
 from . import _text
 
+__all__ = ["Session"]
+
 class SnooperException(Exception):
     pass
 
