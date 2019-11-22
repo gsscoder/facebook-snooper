@@ -3,8 +3,7 @@ import html
 from lxml import html as lxml_html, \
                  etree
 from ._text import strip_ml, \
-                   sanitize_followers, \
-                   get_profile_id
+                   sanitize_followers
 
 
 class Parser:
@@ -52,7 +51,13 @@ class Parser:
                 profile_uri = html.unescape(profileURI[12:-1])
                 if not '/groups/' in profile_uri and \
                    not '/events/' in profile_uri:
-                    profile_id = get_profile_id(profile_uri)
+                    profile_id = self._get_profile_id(profile_uri)
                     profile_name = texts[i][6:-1]
                     results.append((profile_id, profile_name, profile_uri))
         return results
+
+    def _get_profile_id(self, uri):
+        chunk = uri.split('/')[3]
+        if 'profile.php?id=' in uri:
+            chunk = chunk.split('?')[1].split('=')[1]
+        return chunk
