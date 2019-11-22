@@ -1,6 +1,5 @@
-from abc import ABC, \
-                abstractmethod
 import os.path
+from abc import abstractmethod
 from mechanicalsoup import StatefulBrowser, \
                            LinkNotFoundError
 from ._parser import Parser
