@@ -11,12 +11,18 @@ from facebook_snooper import Session
 from mock import MockSession
 
 
-mock_session : Session = MockSession()
+class SessionTestCase(unittest.TestCase):
+    def __init__(self, *args, **kwargs):
+        super(SessionTestCase, self).__init__(*args, **kwargs)
+        self._mock_session : Session =  MockSession()
 
+    @property
+    def mock_session(self):
+        return self._mock_session
 
-class TestGetIntro(unittest.TestCase):
+class TestGetIntro(SessionTestCase):
     def test_profile_info(self):
-        profile = mock_session.profile_info('test')
+        profile = self.mock_session.profile_info('test')
         self.assertIsNotNone(profile)
         name, image_link, followers, intro = profile
         self.assertGreater(len(name), 0)
@@ -25,9 +31,9 @@ class TestGetIntro(unittest.TestCase):
         self.assertGreater(len(intro), 0)
 
 
-class TestSearch(unittest.TestCase):
+class TestSearch(SessionTestCase):
     def test_search_profiles(self):
-        results = mock_session.search('test')
+        results = self.mock_session.search('test')
         self.assertGreater(len(results), 0)
 
 
