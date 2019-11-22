@@ -15,6 +15,7 @@ __all__ = [
 class LogInError(Exception):
     pass
 
+
 class NotConnectedError(Exception):
     pass
 
@@ -24,6 +25,19 @@ class Session:
         self._connected = False
         self._current_html = None
         self._parser = Parser()
+
+    def __del__(self):
+        self._dispose()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self._dispose()
+
+    def _dispose(self):
+        if self.connected:
+            self.log_out()
 
     @property
     def current_html(self):
@@ -37,6 +51,10 @@ class Session:
     @abstractmethod
     def log_in(self, username, password):
         """Log in to Facebook with username and password."""
+        pass
+
+    @abstractmethod
+    def log_out(self):
         pass
 
     def profile_info(self, profile_id):
@@ -103,6 +121,12 @@ class FacebookSession(Session):
         except:
             raise LogInError("Unable to log in as {username}")
         return self
+
+    def log_out(self):
+        if self._connected:
+            self._browser.close()
+            self._browser = None
+            self._connected = False
 
     def _get_current_title(self):
         return self._browser.get_current_page().find('title').text
