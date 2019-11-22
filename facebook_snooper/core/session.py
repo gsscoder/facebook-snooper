@@ -4,7 +4,6 @@ import os.path
 from mechanicalsoup import StatefulBrowser, \
                            LinkNotFoundError
 from ._parser import Parser
-from . import _text
 
 
 __all__ = [
@@ -42,7 +41,7 @@ class Session:
         self._ensure_connected()
         try:
             profile_html = self._get_profile_html(profile_id)
-            name  = _text.sanitize_title(self._get_current_title())
+            name  = self._sanitize_title(self._get_current_title())
             image = self._parser.parse_image(profile_html)
             intro =  self._parser.parse_intro(profile_html)
             followers = self._parser.parse_followers(profile_html)
@@ -73,6 +72,12 @@ class Session:
     def _ensure_connected(self):
         if not self._connected:
             raise SnooperException("No active connection or valid login")
+
+    def _sanitize_title(self, title):
+        # Handle cases like 'Some One - Home'
+        if '-' in title:
+            return title.split('-')[0].strip()
+        return title
 
 
 class FacebookSession(Session):

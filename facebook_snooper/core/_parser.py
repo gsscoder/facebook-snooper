@@ -2,8 +2,7 @@ import re
 import html
 from lxml import html as lxml_html, \
                  etree
-from ._text import strip_ml, \
-                   sanitize_followers
+from ._text import strip_ml
 
 
 class Parser:
@@ -23,7 +22,7 @@ class Parser:
         followers = ''
         matches = self._followers_re.findall(html_text)
         if matches:
-            followers = sanitize_followers(matches[0])
+            followers = self._sanitize_followers(matches[0])
             followers = followers if followers.isdigit() else ''
         return followers
 
@@ -61,3 +60,12 @@ class Parser:
         if 'profile.php?id=' in uri:
             chunk = chunk.split('?')[1].split('=')[1]
         return chunk
+
+    def _sanitize_followers(self, text):
+        followers = ''
+        if '>' in text:
+            # Remove trailing HTML and
+            followers = text[text.find('>') + 1:-7]
+            # Remove thousands separator for every culture
+            followers = followers.replace('.', '').replace(',', '')
+        return followers
