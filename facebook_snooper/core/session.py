@@ -8,6 +8,7 @@ from . import _text
 
 __all__ = ["Session"]
 
+
 class SnooperException(Exception):
     pass
 
@@ -26,29 +27,13 @@ class Session:
     def connected(self):
         return self._connected
 
-    def _ensure_connected(self):
-        if not self._connected:
-            raise SnooperException("No active connection or valid login")
-
-    @abstractmethod
-    def _get_current_title(self):
-        pass
-
-    @abstractmethod
-    def _get_profile_html(self, profile_id):
-        pass
-
-    @abstractmethod
-    def _get_search_html(self, query):
-        pass
-
     @staticmethod
     def default():
         return _FacebookSession()
 
     @abstractmethod
     def log_in(self, username, password):
-        """Log in to facebook with username and password."""
+        """Log in to Facebook with username and password."""
         pass
 
     def profile_info(self, profile_id):
@@ -71,6 +56,22 @@ class Session:
             return _parser.parse_search_result(self._get_search_html(query))
         except:
             return None
+
+    @abstractmethod
+    def _get_current_title(self):
+        pass
+
+    @abstractmethod
+    def _get_profile_html(self, profile_id):
+        pass
+
+    @abstractmethod
+    def _get_search_html(self, query):
+        pass
+
+    def _ensure_connected(self):
+        if not self._connected:
+            raise SnooperException("No active connection or valid login")
 
 
 class _FacebookSession(Session):
