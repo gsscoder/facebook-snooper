@@ -46,7 +46,7 @@ $ mkdir tests/pages
 ```
 ```python
 >>> import facebook_snooper 
->>> from tests import utils
+>>> from tests import persist
 >>> fb = facebook_snooper.default_session()
 >>> fb.log_in('user@email.com', 'user_password')
 True
