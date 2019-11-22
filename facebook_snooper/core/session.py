@@ -3,7 +3,7 @@ from abc import ABC, \
 import os.path
 from mechanicalsoup import StatefulBrowser, \
                            LinkNotFoundError
-from . import _parser
+from ._parser import Parser
 from . import _text
 
 
@@ -21,6 +21,7 @@ class Session:
     def __init__(self):
         self._connected = False
         self._current_html = None
+        self._parser = Parser()
 
     @property
     def current_html(self):
@@ -30,10 +31,6 @@ class Session:
     @property
     def connected(self):
         return self._connected
-
-    # @staticmethod
-    # def default():
-    #     return _FacebookSession()
 
     @abstractmethod
     def log_in(self, username, password):
@@ -46,9 +43,9 @@ class Session:
         try:
             profile_html = self._get_profile_html(profile_id)
             name  = _text.sanitize_title(self._get_current_title())
-            image = _parser.parse_image(profile_html)
-            intro =  _parser.parse_intro(profile_html)
-            followers = _parser.parse_followers(profile_html)
+            image = self._parser.parse_image(profile_html)
+            intro =  self._parser.parse_intro(profile_html)
+            followers = self._parser.parse_followers(profile_html)
             return name, image, followers, intro
         except:
             return None
@@ -57,7 +54,7 @@ class Session:
         """Execute search of a given text returning a tuple with ID, description and URI."""
         self._ensure_connected()
         try:
-            return _parser.parse_search_result(self._get_search_html(query))
+            return self._parser.parse_search_result(self._get_search_html(query))
         except:
             return None
 
