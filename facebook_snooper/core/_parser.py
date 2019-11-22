@@ -9,7 +9,7 @@ from ._text import strip_ml, \
 
 def parse_image(html_text):
     image_link = ''
-    matches = re.findall(r'photoContainer.+?img.+?src="(.+?)"', html_text)
+    matches =  _re.image.findall(html_text)
     if matches:
         image_link = html.unescape(matches[0])
     return image_link
@@ -17,8 +17,7 @@ def parse_image(html_text):
 
 def parse_followers(html_text):
     followers = ''
-    followers_re = re.compile(r'frankbruninyt/followers.*people', re.MULTILINE)
-    matches = followers_re.findall(html_text)
+    matches = _re.followers.findall(html_text)
     if matches:
         followers = sanitize_followers(matches[0])
         followers = followers if followers.isdigit() else ''
@@ -28,7 +27,7 @@ def parse_followers(html_text):
 def parse_intro(html_text):
     items = []
     ul_html = None
-    matches = re.findall(r'intro_container_id.+?</ul', html_text)
+    matches = _re.intro.findall(html_text)
     if matches:
         ul_html = matches[0][20:-4]
     if ul_html:
@@ -49,8 +48,14 @@ def parse_search_result(html_text):
         for i, profileURI in enumerate(profileURIs):
             profile_uri = html.unescape(profileURI[12:-1])
             if not '/groups/' in profile_uri and \
-            not '/events/' in profile_uri:
+               not '/events/' in profile_uri:
                 profile_id = get_profile_id(profile_uri)
                 profile_name = texts[i][6:-1]
                 results.append((profile_id, profile_name, profile_uri))
     return results
+
+
+class _re:
+    followers = re.compile(r'frankbruninyt/followers.*people', re.MULTILINE)
+    image = re.compile(r'photoContainer.+?img.+?src="(.+?)"')
+    intro = re.compile(r'intro_container_id.+?</ul')
