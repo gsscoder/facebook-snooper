@@ -18,10 +18,10 @@ $ python3 -m pip install .
 
 ## Usage
 ```python
->>> from facebook_snooper import Session
->>> fb = Session.default()
+>>> import facebook_snooper
+>>> fb = facebook_snooper.default_session()
 >>> fb
-<facebook_snooper.core._FacebookSession object at 0x10ff45f50>
+<facebook_snooper.core.session.FacebookSession object at 0x10cf22290>
 >>> fb.log_in('user@email.com', 'user_password')
 True
 >>> fb.search('frank new york')
@@ -45,9 +45,9 @@ $ cd facebook-snooper
 $ mkdir tests/pages
 ```
 ```python
->>> from facebook_snooper import Session
+>>> import facebook_snooper 
 >>> from tests import utils
->>> fb = Session.default()
+>>> fb = facebook_snooper.default_session()
 >>> fb.log_in('user@email.com', 'user_password')
 True
 >>> utils.save_page('login', fb.current_html

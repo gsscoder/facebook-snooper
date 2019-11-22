@@ -3,18 +3,41 @@ before running tests you need to create 'test-data' folder,
 please see README.md
 """
 
+
 import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import unittest
 from facebook_snooper import Session
-from mock import MockSession
+
+
+class MockSession(Session):
+    def __init__(self):
+        super()
+        self._connected = True
+        self.pages_dir = os.path.join('.', 'tests/pages')
+
+    def _load_html(self, filename):
+        with open(os.path.join(self.pages_dir, f'{filename}.html'), 'r') as f:
+            return f.read() 
+    
+    def _get_current_title(self):
+        return "someone"
+
+    def _get_profile_html(self, profile_id):
+        return self._load_html('profile')
+
+    def _get_search_html(self, query):
+        return self._load_html('search')
+
+    def log_in(self, username, password):
+        return self._connected
 
 
 class SessionTestCase(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super(SessionTestCase, self).__init__(*args, **kwargs)
-        self._mock_session : Session =  MockSession()
+        self._mock_session =  MockSession()
 
     @property
     def mock_session(self):

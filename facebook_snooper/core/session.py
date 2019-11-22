@@ -6,7 +6,11 @@ from mechanicalsoup import StatefulBrowser, \
 from . import _parser
 from . import _text
 
-__all__ = ["Session"]
+
+__all__ = [
+    "Session",
+    "FacebookSession"
+]
 
 
 class SnooperException(Exception):
@@ -27,9 +31,9 @@ class Session:
     def connected(self):
         return self._connected
 
-    @staticmethod
-    def default():
-        return _FacebookSession()
+    # @staticmethod
+    # def default():
+    #     return _FacebookSession()
 
     @abstractmethod
     def log_in(self, username, password):
@@ -74,7 +78,7 @@ class Session:
             raise SnooperException("No active connection or valid login")
 
 
-class _FacebookSession(Session):
+class FacebookSession(Session):
     def log_in(self, username, password):
         self._base_url = 'https://www.facebook.com'
         try:
