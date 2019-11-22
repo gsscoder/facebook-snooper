@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import find_packages, setup
+from facebook_snooper.__version__ import __version__
 
 # Package meta-data
 NAME = 'facebook-snooper'
@@ -8,7 +9,7 @@ DESCRIPTION = 'Scrapes Facebook profile pages and searches profiles using a norm
 URL = 'https://github.com/bisguzar/twitter-scraper'
 EMAIL = 'gsscoder@gmail.com'
 AUTHOR = 'Giacomo Stelluti Scala'
-VERSION = '0.3.3'
+VERSION = __version__
 
 # Required packages
 REQUIRED = [
