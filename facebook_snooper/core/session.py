@@ -62,9 +62,9 @@ class Session:
         try:
             profile_html = self._get_profile_html(id_)
             name  = self._sanitize_title(self._get_current_title())
-            image = self._parser.parse_image(profile_html)
-            intro =  self._parser.parse_intro(profile_html)
-            followers = self._parser.parse_followers(id_, profile_html)
+            image = '' #self._parser.parse_image(profile_html)
+            intro = self._parser.get_info(profile_html) #self._parser.parse_intro(profile_html)
+            followers = '' #self._parser.parse_followers(id_, profile_html)
             return name, image, followers, intro
         except:
             return None

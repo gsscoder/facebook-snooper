@@ -24,18 +24,13 @@ class Parser:
             followers = self._parse_followers_2(id_, html_text)
         return followers
 
-    def parse_intro(self, html_text):
-        items = []
-        ul_html = None
-        matches = self._intro_re.findall(html_text)
-        if matches:
-            ul_html = matches[0][20:-4]
-        if ul_html:
-            tree = lxml_html.fromstring(ul_html)
-            for intro in tree.xpath('//li/*[1]/div/div/div'):
-                fragment = etree.tostring(intro).decode("utf-8")
-                info = html.unescape(strip_ml(fragment))
-                items.append(info)           
+    def get_info(self, html_):
+        items = \
+            self._parse_info('work', html_)
+        items.extend(
+            self._parse_info('education', html_))
+        items.extend(
+            self._parse_info('living', html_))
         return items
 
     def parse_search_result(self, html_text):
@@ -52,6 +47,14 @@ class Parser:
                     profile_name = texts[i][6:-1]
                     results.append((profile_id, profile_name, profile_uri))
         return results
+
+    def _parse_info(self, type_, html_):
+        items = []
+        tree = lxml_html.fromstring(html_.encode('utf-8'))
+        for link in tree.xpath(f"//div[@id='{type_}']//a"):
+            if not link.text is None:
+                items.append(link.text)
+        return items
 
     def _parse_followers_1(self, html_text):
         followers = ''
