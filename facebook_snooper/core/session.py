@@ -63,7 +63,7 @@ class Session:
             profile_html = self._get_profile_html(id_)
             name  = self._sanitize_title(self._get_current_title())
             image = self._parser.parse_image(name, profile_html)
-            intro = self._parser.get_info(profile_html)
+            intro = self._parser.parse_info(profile_html)
             return name, image, intro
         except:
             return None

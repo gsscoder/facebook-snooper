@@ -14,7 +14,7 @@ class Parser:
             image_link = image[0].attrib['src']
         return image_link
 
-    def get_info(self, html_):
+    def parse_info(self, html_):
         items = \
             self._parse_info('work', html_)
         items.extend(
