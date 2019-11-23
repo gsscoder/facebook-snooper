@@ -13,12 +13,11 @@ from facebook_snooper import Session
 
 class MockSession(Session):
     def __init__(self):
-        super()
-        self._connected = False
-        self.pages_dir = os.path.join('.', 'tests/pages')
+        Session.__init__(self)
+        self._pages_dir = os.path.join('.', 'tests/pages')
 
     def _load_html(self, filename):
-        with open(os.path.join(self.pages_dir, f'{filename}.html'), 'r') as f:
+        with open(os.path.join(self._pages_dir, f'{filename}.html'), 'r') as f:
             return f.read() 
     
     def _get_current_title(self):
@@ -38,15 +37,17 @@ class MockSession(Session):
 class SessionTestCase(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super(SessionTestCase, self).__init__(*args, **kwargs)
-        self._mock_session =  MockSession()
+        self._mock_session = MockSession()
+        self._mock_session.log_in('fake', 'mock')
 
     @property
     def mock_session(self):
         return self._mock_session
 
+
 class TestGetIntro(SessionTestCase):
     def test_profile_info(self):
-        profile = self.mock_session.profile_info('test')
+        profile = self._mock_session.profile_info('fake')
         self.assertIsNotNone(profile)
         name, image_link, followers, intro = profile
         self.assertGreater(len(name), 0)
@@ -57,7 +58,7 @@ class TestGetIntro(SessionTestCase):
 
 class TestSearch(SessionTestCase):
     def test_search_profiles(self):
-        results = self.mock_session.search('test')
+        results = self._mock_session.search('test')
         self.assertGreater(len(results), 0)
 
 

@@ -56,15 +56,15 @@ class Session:
     def log_out(self):
         pass
 
-    def profile_info(self, profile_id):
+    def profile_info(self, id_):
         """Retrieve informations for a given profile."""
         self._ensure_connected()
         try:
-            profile_html = self._get_profile_html(profile_id)
+            profile_html = self._get_profile_html(id_)
             name  = self._sanitize_title(self._get_current_title())
             image = self._parser.parse_image(profile_html)
             intro =  self._parser.parse_intro(profile_html)
-            followers = self._parser.parse_followers(profile_html)
+            followers = self._parser.parse_followers(id_, profile_html)
             return name, image, followers, intro
         except:
             return None

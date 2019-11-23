@@ -7,7 +7,7 @@ from ._text import strip_ml
 
 class Parser:
     def __init__(self):
-        self._followers_re = re.compile(r'frankbruninyt/followers.*people', re.MULTILINE)
+        self._followers_re = re.compile(r'Follower:.*</span', re.MULTILINE)
         self._image_re = re.compile(r'photoContainer.+?img.+?src="(.+?)"')
         self._intro_re = re.compile(r'intro_container_id.+?</ul')
 
@@ -18,12 +18,10 @@ class Parser:
             image_link = html.unescape(matches[0])
         return image_link
 
-    def parse_followers(self, html_text):
-        followers = ''
-        matches = self._followers_re.findall(html_text)
-        if matches:
-            followers = self._sanitize_followers(matches[0])
-            followers = followers if followers.isdigit() else ''
+    def parse_followers(self, id_, html_text):
+        followers = self._parse_followers_1(html_text)
+        if len(followers) == 0:
+            followers = self._parse_followers_2(id_, html_text)
         return followers
 
     def parse_intro(self, html_text):
@@ -55,16 +53,38 @@ class Parser:
                     results.append((profile_id, profile_name, profile_uri))
         return results
 
+    def _parse_followers_1(self, html_text):
+        followers = ''
+        matches = self._followers_re.findall(html_text)
+        if matches:
+            followers = self._sanitize_followers_1(matches[0])
+            followers = followers if followers.isdigit() else ''
+        return followers
+
+    def _parse_followers_2(self, id_, html_text):
+        followers = ''
+        matches = re.compile(id_ + r'/followers.*people', re.MULTILINE).findall(html_text)
+        if matches:
+            followers = self._sanitize_followers_2(matches[0])
+            followers = followers if followers.isdigit() else ''
+        return followers
+
     def _get_profile_id(self, uri):
         chunk = uri.split('/')[3]
         if 'profile.php?id=' in uri:
             chunk = chunk.split('?')[1].split('=')[1]
         return chunk
 
-    def _sanitize_followers(self, text):
+    def _sanitize_followers_1(self, text):
+        # Remove trailing HTML
+        followers = text[:-6][9:].strip()
+        # Remove thousands separator for every culture
+        return followers.replace('.', '').replace(',', '')
+
+    def _sanitize_followers_2(self, text):
         followers = ''
         if '>' in text:
-            # Remove trailing HTML and
+            # Remove trailing HTML
             followers = text[text.find('>') + 1:-7]
             # Remove thousands separator for every culture
             followers = followers.replace('.', '').replace(',', '')
