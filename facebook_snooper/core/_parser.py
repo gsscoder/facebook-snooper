@@ -11,11 +11,12 @@ class Parser:
         self._image_re = re.compile(r'photoContainer.+?img.+?src="(.+?)"')
         self._intro_re = re.compile(r'intro_container_id.+?</ul')
 
-    def parse_image(self, html_text):
+    def parse_image(self, name, html_):
         image_link = ''
-        matches =  self._image_re.findall(html_text)
-        if matches:
-            image_link = html.unescape(matches[0])
+        tree = lxml_html.fromstring(html_.encode('utf-8'))
+        image = tree.xpath(f"//img[@alt='{name}']")
+        if not image is None:
+            image_link = image[0].attrib['src']
         return image_link
 
     def parse_followers(self, id_, html_text):
