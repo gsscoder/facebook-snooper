@@ -27,14 +27,12 @@ $ python3 -m pip install .
 >>> fb.search('frank new york')
 [('frank.cisneros.56', 'hubs', 'https://www.facebook.com/frank.cisneros.56'),
  ('frankbruninyt', 'Frank Cisneros', 'https://www.facebook.com/frankbruninyt')]
->>> name, image_link, followers, intro = fb.profile_info('frankbruninyt')
+>>> name, image_link, info = fb.profile_info('frankbruninyt')
 >>> name
 'Frank Bruni'
 >>> image_link
 'https://scontent-fco1-1.xx.fbcdn.net/v/t1.0-1/p160x160/49342020_10157005134417363_1173260116078624768_o.jpg?_nc_cat=101&_nc_oc=AQliVuLJdFWX1at-6TPqNRWj3_T6I-cJvESxIfPvcFD1NNjRMGaDr0m8XUKZOwY3_kA&_nc_ht=scontent-fco1-1.xx&oh=c658885ef831fdcd1a7f7b6f3faa958d&oe=5E559A48'
->>> followers
-'234994'
->>> intro
+>>> info
 ['Works at The New York Times', 'Studied at Columbia University',
  'Studied at UNC Chapel Hill', 'Went to Loomis Chaffee', 'Went to Loomis Chaffee, Windsor, Conn.',
  'Lives in New York, New York', 'From White Plains, New York', 'Followed by 234,994 people']

@@ -64,8 +64,7 @@ class Session:
             name  = self._sanitize_title(self._get_current_title())
             image = self._parser.parse_image(name, profile_html)
             intro = self._parser.get_info(profile_html)
-            followers = '' #self._parser.parse_followers(id_, profile_html)
-            return name, image, followers, intro
+            return name, image, intro
         except:
             return None
 
@@ -106,9 +105,7 @@ class FacebookSession(Session):
         try:
             self._browser = StatefulBrowser()
             self._browser.addHeaders = [
-                    ('User-Agent', 'Mozilla/5.0 (Linux; Android 4.4.2; Nexus ' + \
-                        '4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like ' + \
-                        'Gecko) Chrome/34.0.1847.114 Mobile Safari/537.36'), \
+                    ('User-Agent', 'Mozilla/5.0 (Linux; Android 7.0; PLUS Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.98 Mobile Safari/537.36'), \
                     ('Accept-Language', 'en-US,en;q=0.5')
                     ]
             self._browser.open(self._base_url)

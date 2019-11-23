@@ -6,9 +6,6 @@ from ._text import strip_ml
 
 
 class Parser:
-    def __init__(self):
-        self._followers_re = re.compile(r'Follower:.*</span', re.MULTILINE)
-
     def parse_image(self, name, html_):
         image_link = ''
         tree = lxml_html.fromstring(html_.encode('utf-8'))
@@ -16,12 +13,6 @@ class Parser:
         if not image is None:
             image_link = image[0].attrib['src']
         return image_link
-
-    def parse_followers(self, id_, html_text):
-        followers = self._parse_followers_1(html_text)
-        if len(followers) == 0:
-            followers = self._parse_followers_2(id_, html_text)
-        return followers
 
     def get_info(self, html_):
         items = \
@@ -54,22 +45,6 @@ class Parser:
             if not link.text is None:
                 items.append(link.text)
         return items
-
-    def _parse_followers_1(self, html_text):
-        followers = ''
-        matches = self._followers_re.findall(html_text)
-        if matches:
-            followers = self._sanitize_followers_1(matches[0])
-            followers = followers if followers.isdigit() else ''
-        return followers
-
-    def _parse_followers_2(self, id_, html_text):
-        followers = ''
-        matches = re.compile(id_ + r'/followers.*people', re.MULTILINE).findall(html_text)
-        if matches:
-            followers = self._sanitize_followers_2(matches[0])
-            followers = followers if followers.isdigit() else ''
-        return followers
 
     def _get_profile_id(self, uri):
         chunk = uri.split('/')[3]
