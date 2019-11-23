@@ -91,7 +91,7 @@ class Session:
 
     def _ensure_connected(self):
         if not self._connected:
-            raise NotConnectedError("No active connection or valid login")
+            raise NotConnectedError('No active connection or valid login')
 
     def _sanitize_title(self, title):
         # Handle cases like 'Some One - Home'
@@ -118,7 +118,7 @@ class FacebookSession(Session):
             self._browser.select_form('form[action="/search/top/"]')
             self._connected = True
         except:
-            raise LogInError("Unable to log in as {username}")
+            raise LogInError(f'Unable to log in as {username}')
         return self
 
     def log_out(self):
