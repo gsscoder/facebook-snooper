@@ -102,7 +102,7 @@ class Session:
 
 class FacebookSession(Session):
     def log_in(self, username, password):
-        self._base_url = 'https://www.facebook.com'
+        self._base_url = 'https://m.facebook.com'
         try:
             self._browser = StatefulBrowser()
             self._browser.addHeaders = [
@@ -115,7 +115,7 @@ class FacebookSession(Session):
             self._browser['email'] = username
             self._browser['pass'] =  password        
             self._browser.submit_selected()
-            self._browser.select_form('form[action="/search/top/"]')
+            # self._browser.select_form('form[action="/search/top/"]')
             self._connected = True
         except:
             raise LogInError(f'Unable to log in as {username}')
