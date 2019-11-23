@@ -67,6 +67,7 @@ $ python3 tests/core.py
 ```
 
 ### Disclaimer
+- This package cannot gather nothing more that is publicly visible.
 - Please respect people's privacy and use it ethically.
 
 ### Notes
