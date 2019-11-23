@@ -8,8 +8,6 @@ from ._text import strip_ml
 class Parser:
     def __init__(self):
         self._followers_re = re.compile(r'Follower:.*</span', re.MULTILINE)
-        self._image_re = re.compile(r'photoContainer.+?img.+?src="(.+?)"')
-        self._intro_re = re.compile(r'intro_container_id.+?</ul')
 
     def parse_image(self, name, html_):
         image_link = ''
