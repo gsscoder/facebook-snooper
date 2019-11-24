@@ -2,6 +2,7 @@ import os.path
 from abc import abstractmethod
 from mechanicalsoup import StatefulBrowser, \
                            LinkNotFoundError
+from .exceptions import LogInError, NotConnectedError
 from ._parser import Parser
 
 
@@ -9,14 +10,6 @@ __all__ = [
     "Session",
     "FacebookSession"
 ]
-
-
-class LogInError(Exception):
-    pass
-
-
-class NotConnectedError(Exception):
-    pass
 
 
 class Session:
