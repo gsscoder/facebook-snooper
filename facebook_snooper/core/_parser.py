@@ -1,5 +1,4 @@
 import re
-from ._text import strip_ml
 
 
 def parse_image(name, page):
@@ -21,7 +20,7 @@ def parse_info(page):
 
 def parse_search(page):
     matches = page.find_all('div', attrs={'id': 'BrowseResultsContainer'})
-    if len(matches) > 0:
+    if len(matches) == 0:
         return []
     results = []
     container = matches[0]
