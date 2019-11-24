@@ -13,7 +13,6 @@ VERSION = __version__
 
 # Required packages
 REQUIRED = [
-    'requests-html',
     'MechanicalSoup'
 ]
 
