@@ -35,7 +35,8 @@ class Parser:
                 for div in a.find_all('div'):
                     text = div.get_text()
                     # Avoid duplicates
-                    if len(text) > 0 and text not in texts:
+                    if len(text) > 0 and text not in texts and \
+                        '/groups/' not in href and '/events/' not in href:
                         texts.append(text)
                 if len(texts) > 0:
                     results.append((id_, texts, link))
