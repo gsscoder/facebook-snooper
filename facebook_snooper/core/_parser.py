@@ -1,6 +1,5 @@
 import re
-import html
-from lxml import html as lxml_html, \
+from lxml import html, \
                  etree
 from ._text import strip_ml
 
@@ -45,7 +44,7 @@ class Parser:
     def _parse_info(self, type_, soup):
         items = []
         html_ = str(soup)
-        tree = lxml_html.fromstring(html_.encode('utf-8'))
+        tree = html.fromstring(html_.encode('utf-8'))
         for link in tree.xpath(f"//div[@id='{type_}']//a"):
             if not link.text is None:
                 items.append(link.text)
