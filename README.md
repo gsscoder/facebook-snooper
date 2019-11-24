@@ -41,32 +41,6 @@ $ python3 -m pip install .
  'Loomis Chaffee, Windsor, Conn.', 'New York', 'White Plains']
 ```
 
-## Test
-Create test directory and data:
-```sh
-$ cd facebook-snooper
-$ mkdir tests/pages
-```
-```python
->>> import facebook_snooper 
->>> from tests import persist
->>> fb = facebook_snooper.default_session()
->>> fb.log_in('user@email.com', 'user_password')
-True
->>> utils.save_page('login', fb.current_html
->>> fb.search('frank new york')
-...
->>> utils.save_page('search', fb.current_html)
->>> fb.profile_info('frankbruninyt')
-...
->>> utils.save_page('profile', fb.current_html)
-
-```
-Execute tests:
-```sh
-$ python3 tests/core.py
-```
-
 ### Disclaimer
 - This package cannot gather nothing more that is publicly visible.
 - Please respect people's privacy and use it ethically.
