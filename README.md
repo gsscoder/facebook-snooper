@@ -1,7 +1,6 @@
 # Facebook Snooper
 
-Scrapes Facebook profile pages and searches profiles using a normal log in (without an API key). Inspired by [facebook-scraper](https://github.com/kevinzg/facebook-scraper).
-Built with [MechanicalSoup](https://github.com/MechanicalSoup/MechanicalSoup) and [lxml](https://github.com/lxml/lxml).
+Scrapes Facebook profile pages and searches profiles using a normal log in (without an API key). Inspired by [facebook-scraper](https://github.com/kevinzg/facebook-scraper). Built with [MechanicalSoup](https://github.com/MechanicalSoup/MechanicalSoup).
 
 ## Install
 **NOTE**: Python 3.7 or higher is required.
