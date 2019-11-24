@@ -72,7 +72,7 @@ class Session:
         """Execute search of a given text returning a tuple with ID, description and URI."""
         self._ensure_connected()
         try:
-            return self._parser.parse_search_result(self._get_search_html(query))
+            return self._parser.parse_search_result(self._get_search_soup(query))
         except:
             return None
 
@@ -85,7 +85,7 @@ class Session:
         pass
 
     @abstractmethod
-    def _get_search_html(self, query):
+    def _get_search_soup(self, query):
         pass
 
     def _ensure_connected(self):
@@ -105,7 +105,10 @@ class FacebookSession(Session):
         try:
             self._browser = StatefulBrowser()
             self._browser.addHeaders = [
-                    ('User-Agent', 'Mozilla/5.0 (Linux; Android 7.0; PLUS Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.98 Mobile Safari/537.36'), \
+                    ('User-Agent', 'Mozilla/5.0 (Linux; Android 7.0; ' + \
+                        'PLUS Build/NRD90M) AppleWebKit/537.36 (KHTML, ' + \
+                        'like Gecko) Chrome/61.0.3163.98 Mobile ' + \
+                        'Safari/537.36'), \
                     ('Accept-Language', 'en-US,en;q=0.5')
                     ]
             self._browser.open(self._base_url)
@@ -114,7 +117,6 @@ class FacebookSession(Session):
             self._browser['email'] = username
             self._browser['pass'] =  password        
             self._browser.submit_selected()
-            # self._browser.select_form('form[action="/search/top/"]')
             self._connected = True
         except:
             raise LogInError(f'Unable to log in as {username}')
@@ -135,9 +137,8 @@ class FacebookSession(Session):
         self._current_html = str(self._browser.get_current_page())
         return self._current_html
 
-    def _get_search_html(self, query):
-        self._browser.select_form('form[action="/search/top/"]')
-        self._browser['q'] = query
-        self._browser.submit_selected()
+    def _get_search_soup(self, query):
+        url_query = '+'.join(query.split())
+        self._browser.open(f'{self._base_url}/search/top/?q={url_query}')
         self._current_html = str(self._browser.get_current_page())
-        return self._current_html
+        return self._browser.get_current_page()

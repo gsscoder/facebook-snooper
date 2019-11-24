@@ -23,19 +23,22 @@ class Parser:
             self._parse_info('living', html_))
         return items
 
-    def parse_search_result(self, html_text):
+    def parse_search_result(self, soup):
         results = []
-        # Rip JavaScript dictionary data
-        profileURIs = re.findall(r'profileURI:".+?"', html_text)
-        texts = re.findall(r'text:".+?"', html_text)
-        if profileURIs:
-            for i, profileURI in enumerate(profileURIs):
-                profile_uri = html.unescape(profileURI[12:-1])
-                if not '/groups/' in profile_uri and \
-                   not '/events/' in profile_uri:
-                    profile_id = self._get_profile_id(profile_uri)
-                    profile_name = texts[i][6:-1]
-                    results.append((profile_id, profile_name, profile_uri))
+        container = soup.find_all('div', id='BrowseResultsContainer')[0]
+        for a in container.find_all('a'):
+            if 'href' in a.attrs:
+                href = a.attrs['href']
+                id_ = self._get_profile_id(href)
+                link = f'https://m.facebook.com{href}'
+                texts = []
+                for div in a.find_all('div'):
+                    text = div.get_text()
+                    # Avoid duplicates
+                    if len(text) > 0 and text not in texts:
+                        texts.append(text)
+                if len(texts) > 0:
+                    results.append((id_, texts, link))
         return results
 
     def _parse_info(self, type_, html_):
@@ -45,12 +48,15 @@ class Parser:
             if not link.text is None:
                 items.append(link.text)
         return items
-
-    def _get_profile_id(self, uri):
-        chunk = uri.split('/')[3]
-        if 'profile.php?id=' in uri:
-            chunk = chunk.split('?')[1].split('=')[1]
-        return chunk
+    
+    def _get_profile_id(self, uri_part):
+        matches = re.findall('(?<=\=).+?(?=&)', uri_part)
+        if matches:
+            return matches[0]
+        matches = re.findall('(?<=/).+?(?=\?)', uri_part)
+        if matches:
+            return matches[0]
+        return ''
 
     def _sanitize_followers_1(self, text):
         # Remove trailing HTML

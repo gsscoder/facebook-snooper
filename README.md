@@ -25,8 +25,13 @@ $ python3 -m pip install .
 >>> fb.log_in('user@email.com', 'user_password')
 <facebook_snooper.core.session.FacebookSession object at 0x106f64590>
 >>> fb.search('frank new york')
-[('frank.cisneros.56', 'hubs', 'https://www.facebook.com/frank.cisneros.56'),
- ('frankbruninyt', 'Frank Cisneros', 'https://www.facebook.com/frankbruninyt')]
+('frankdecaro',
+  ['Frank DeCaro', 'Author at Rizzoli New York',
+   'Freelance Writer at The New York Times'],
+  'https://m.facebook.com/frankdecaro?refid=46')
+('frankbruninyt',
+  ['Frank Bruni', 'The New York Times', 'New York, New York'],
+  'https://m.facebook.com/frankbruninyt?refid=46')
 >>> name, image_link, info = fb.profile_info('frankbruninyt')
 >>> name
 'Frank Bruni'
