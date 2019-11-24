@@ -14,13 +14,13 @@ class Parser:
             image_link = image.attrs['src'] if 'src' in image.attrs else ''
         return image_link
 
-    def parse_info(self, html_):
+    def parse_info(self, soup):
         items = \
-            self._parse_info('work', html_)
+            self._parse_info('work', soup)
         items.extend(
-            self._parse_info('education', html_))
+            self._parse_info('education', soup))
         items.extend(
-            self._parse_info('living', html_))
+            self._parse_info('living', soup))
         return items
 
     def parse_search_result(self, soup):
@@ -42,8 +42,9 @@ class Parser:
                     results.append((id_, texts, link))
         return results
 
-    def _parse_info(self, type_, html_):
+    def _parse_info(self, type_, soup):
         items = []
+        html_ = str(soup)
         tree = lxml_html.fromstring(html_.encode('utf-8'))
         for link in tree.xpath(f"//div[@id='{type_}']//a"):
             if not link.text is None:
