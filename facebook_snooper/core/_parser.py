@@ -25,7 +25,7 @@ class Parser:
 
     def parse_search_result(self, soup):
         results = []
-        container = soup.find_all('div', id='BrowseResultsContainer')[0]
+        container = soup.find_all('div', attrs={'id': 'BrowseResultsContainer'})[0]
         for a in container.find_all('a'):
             if 'href' in a.attrs:
                 href = a.attrs['href']
