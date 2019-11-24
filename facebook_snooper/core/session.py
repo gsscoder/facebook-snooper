@@ -85,7 +85,7 @@ class Session:
         """Execute search of a given text returning a tuple with ID, description and URI."""
         self._ensure_connected()
         try:
-            return self._parser.parse_search_result(self._get_search_soup(query))
+            return self._parser.parse_search(self._get_search_soup(query))
         except:
             return None
 

@@ -3,25 +3,25 @@ from ._text import strip_ml
 
 
 class Parser:
-    def parse_image(self, name, soup):
+    def parse_image(self, name, page):
         image_link = ''
-        matches = soup.find_all('img', alt=name)
+        matches = page.find_all('img', alt=name)
         if len(matches) > 0:
             image = matches[0]
             image_link = image.attrs['src'] if 'src' in image.attrs else ''
         return image_link
 
-    def parse_info(self, soup):
+    def parse_info(self, page):
         items = \
-            self._parse_info('work', soup)
+            self._parse_info('work', page)
         items.extend(
-            self._parse_info('education', soup))
+            self._parse_info('education', page))
         items.extend(
-            self._parse_info('living', soup))
+            self._parse_info('living', page))
         return items
 
-    def parse_search_result(self, soup):
-        matches = soup.find_all('div', attrs={'id': 'BrowseResultsContainer'})
+    def parse_search(self, page):
+        matches = page.find_all('div', attrs={'id': 'BrowseResultsContainer'})
         if len(matches) > 0:
             return []
         results = []
@@ -42,9 +42,9 @@ class Parser:
                     results.append((id_, texts, link))
         return results
 
-    def _parse_info(self, type_, soup):
+    def _parse_info(self, type_, page):
         texts = []
-        matches = soup.find_all('div', attrs={'id': type_})
+        matches = page.find_all('div', attrs={'id': type_})
         if len(matches) > 0:
             links = matches[0].find_all('a')
             for link in links:
