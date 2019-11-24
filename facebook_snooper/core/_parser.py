@@ -1,6 +1,4 @@
 import re
-from lxml import html, \
-                 etree
 from ._text import strip_ml
 
 
@@ -42,13 +40,15 @@ class Parser:
         return results
 
     def _parse_info(self, type_, soup):
-        items = []
-        html_ = str(soup)
-        tree = html.fromstring(html_.encode('utf-8'))
-        for link in tree.xpath(f"//div[@id='{type_}']//a"):
-            if not link.text is None:
-                items.append(link.text)
-        return items
+        texts = []
+        matches = soup.find_all('div', attrs={'id': type_})
+        if len(matches) > 0:
+            links = matches[0].find_all('a')
+            for link in links:
+                text = link.get_text()
+                if link.get_text():
+                    texts.append(text)
+        return texts
     
     def _get_profile_id(self, uri_part):
         matches = re.findall(r'(?<=\=).+?(?=&)', uri_part)
