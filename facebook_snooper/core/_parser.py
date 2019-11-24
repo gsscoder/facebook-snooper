@@ -52,10 +52,10 @@ class Parser:
         return items
     
     def _get_profile_id(self, uri_part):
-        matches = re.findall('(?<=\=).+?(?=&)', uri_part)
+        matches = re.findall(r'(?<=\=).+?(?=&)', uri_part)
         if matches:
             return matches[0]
-        matches = re.findall('(?<=/).+?(?=\?)', uri_part)
+        matches = re.findall(r'(?<=/).+?(?=\?)', uri_part)
         if matches:
             return matches[0]
         return ''
