@@ -62,7 +62,7 @@ class Session:
         try:
             profile_html = self._get_profile_html(id_)
             name  = self._sanitize_title(self._get_current_title())
-            image = self._parser.parse_image(name, profile_html)
+            image = self._parser.parse_image(name, self._get_current_soup())
             intro = self._parser.parse_info(profile_html)
             return name, image, intro
         except:
@@ -86,6 +86,10 @@ class Session:
 
     @abstractmethod
     def _get_search_soup(self, query):
+        pass
+
+    @abstractmethod
+    def _get_current_soup(self):
         pass
 
     def _ensure_connected(self):
@@ -141,4 +145,7 @@ class FacebookSession(Session):
         url_query = '+'.join(query.split())
         self._browser.open(f'{self._base_url}/search/top/?q={url_query}')
         self._current_html = str(self._browser.get_current_page())
+        return self._browser.get_current_page()
+
+    def _get_current_soup(self):
         return self._browser.get_current_page()

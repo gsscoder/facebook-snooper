@@ -6,12 +6,12 @@ from ._text import strip_ml
 
 
 class Parser:
-    def parse_image(self, name, html_):
+    def parse_image(self, name, soup):
         image_link = ''
-        tree = lxml_html.fromstring(html_.encode('utf-8'))
-        image = tree.xpath(f"//img[@alt='{name}']")
-        if not image is None:
-            image_link = image[0].attrib['src']
+        matches = soup.find_all('img', alt=name)
+        if len(matches) > 0:
+            image = matches[0]
+            image_link = image.attrs['src'] if 'src' in image.attrs else ''
         return image_link
 
     def parse_info(self, html_):
