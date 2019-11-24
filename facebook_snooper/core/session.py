@@ -1,9 +1,11 @@
 import os.path
 from abc import abstractmethod
-from mechanicalsoup import StatefulBrowser, \
-                           LinkNotFoundError
-from .exceptions import LogInError, NotConnectedError
-from ._parser import Parser
+from mechanicalsoup import StatefulBrowser
+from .exceptions import LogInError, \
+                        NotConnectedError
+from ._parser import parse_image, \
+                     parse_info, \
+                     parse_search
 
 
 __all__ = [
@@ -17,7 +19,6 @@ class Session:
     def __init__(self):
         self._connected = False
         self._current_html = None
-        self._parser = Parser()
 
     def __del__(self):
         self._dispose()
@@ -75,17 +76,20 @@ class Session:
         try:
             profile_html = self._get_profile_html(id_)
             name  = self._sanitize_title(self._get_current_title())
-            image = self._parser.parse_image(name, self._get_current_soup())
-            info = self._parser.parse_info(self._get_current_soup())
+            image = parse_image(name, self._get_current_soup())
+            info = parse_info(self._get_current_soup())
             return name, image, info
         except:
             return None
 
     def search(self, query):
-        """Execute search of a given text returning a tuple with ID, description and URI."""
+        """
+        Execute search of a given text returning a tuple with ID,
+        descriptions and URI.
+        """
         self._ensure_connected()
         try:
-            return self._parser.parse_search(self._get_search_soup(query))
+            return parse_search(self._get_search_soup(query))
         except:
             return None
 
