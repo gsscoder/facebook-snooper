@@ -58,18 +58,3 @@ class Parser:
         if matches:
             return matches[0]
         return ''
-
-    def _sanitize_followers_1(self, text):
-        # Remove trailing HTML
-        followers = text[:-6][9:].strip()
-        # Remove thousands separator for every culture
-        return followers.replace('.', '').replace(',', '')
-
-    def _sanitize_followers_2(self, text):
-        followers = ''
-        if '>' in text:
-            # Remove trailing HTML
-            followers = text[text.find('>') + 1:-7]
-            # Remove thousands separator for every culture
-            followers = followers.replace('.', '').replace(',', '')
-        return followers
