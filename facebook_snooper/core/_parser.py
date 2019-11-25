@@ -1,6 +1,3 @@
-import re
-
-
 def parse_image(name, page):
     image_link = ''
     matches = page.find_all('img', alt=name)
@@ -52,6 +49,7 @@ def _parse_info(type_, page):
     return texts
     
 def _get_profile_id(uri_part):
+    import re
     matches = re.findall(r'(?<=\=).+?(?=&)', uri_part)
     if matches:
         return matches[0]
