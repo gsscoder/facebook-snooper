@@ -2,6 +2,7 @@ import os.path
 from abc import abstractmethod
 from mechanicalsoup import StatefulBrowser
 from .exceptions import LogInError, NotConnectedError
+from .URLopener import URLopener
 from ._parser import parse_image, parse_info, parse_search
 
 
@@ -13,9 +14,10 @@ __all__ = [
 class Session:
     BASE_URL = 'https://m.facebook.com'
 
-    def __init__(self):
+    def __init__(self, url_opener=URLopener()):
         self._connected = False
         self._current_html = None
+        self._url_opener = url_opener
         self._browser = StatefulBrowser()
         self._browser.addHeaders = [
                 ('User-Agent', 'Mozilla/5.0 (Linux; Android 7.0; PLUS ' +
@@ -35,7 +37,7 @@ class Session:
 
     def log_in(self, username, password):
         try:
-            self._browser.open(Session.BASE_URL)
+            self._url_opener.open(self._browser, Session.BASE_URL)
             self._browser.select_form('form[id="login_form"]')
             self._browser['email'] = username
             self._browser['pass'] =  password        
@@ -54,7 +56,7 @@ class Session:
         """Retrieve informations for a given profile."""
         self._ensure_connected()
         try:
-            self._browser.open(f'{Session.BASE_URL}/{id_}')
+            self._url_opener.open(self._browser, f'{Session.BASE_URL}/{id_}')
             name  = self._sanitize_title(
                 self._browser.get_current_page().find('title').text)
             image = parse_image(name, self._browser.get_current_page())
@@ -71,7 +73,7 @@ class Session:
         self._ensure_connected()
         try:
             url_query = '+'.join(query.split())
-            self._browser.open(f'{Session.BASE_URL}/search/top/?q={url_query}')
+            self._url_opener.open(self._browser, f'{Session.BASE_URL}/search/top/?q={url_query}')
             return parse_search(self._browser.get_current_page())
         except:
             return None
