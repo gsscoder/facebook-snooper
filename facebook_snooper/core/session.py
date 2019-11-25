@@ -37,12 +37,16 @@ class Session:
 
     def log_in(self, username, password):
         try:
+            # Log in to non-mobile site is more reliable
             self._url_opener.open(self._browser, "https://www.facebook.com")
             self._browser.select_form('form[id="login_form"]')
             self._browser['email'] = username
             self._browser['pass'] =  password        
             self._browser.submit_selected()
-            self._connected = True
+            # Check if we really are in account profile page
+            if self._browser.get_current_page().find('form',
+                action='/search/top/'):
+                self._connected = True
         except:
             raise LogInError(f'Unable to log in as {username}')
         return self
