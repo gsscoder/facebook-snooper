@@ -4,5 +4,5 @@ from .core.wrapper import BrowserWrapper
 from .core.exceptions import LogInError, NotConnectedError
 
 
-def default_session():
-    return Session()
+def init_session():
+    return Session(BrowserWrapper())

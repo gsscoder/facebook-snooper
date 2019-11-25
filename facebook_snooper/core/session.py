@@ -14,7 +14,7 @@ __all__ = [
 class Session:
     BASE_URL = 'https://m.facebook.com'
 
-    def __init__(self, browser_wrapper=BrowserWrapper()):
+    def __init__(self, browser_wrapper):
         self._connected = False
         self._current_html = None
         self._browser_wrapper = browser_wrapper
