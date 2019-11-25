@@ -1,13 +1,14 @@
-import os
-import sys
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__),
-    '..')))
 from facebook_snooper import Session
 
 
 __all__ = [
     "save_current_page"
 ]
+
+
+def save_login(session: Session):
+    session._browser.open('https://www.facebook.com')
+    save_current_page(session, 'login')
 
 
 def save_current_page(session: Session, filename):

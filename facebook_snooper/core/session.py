@@ -2,7 +2,7 @@ import os.path
 from abc import abstractmethod
 from mechanicalsoup import StatefulBrowser
 from .exceptions import LogInError, NotConnectedError
-from .URLopener import URLopener
+from .wrapper import BrowserWrapper
 from ._parser import parse_image, parse_info, parse_search
 
 
@@ -14,15 +14,13 @@ __all__ = [
 class Session:
     BASE_URL = 'https://m.facebook.com'
 
-    def __init__(self, url_opener=URLopener()):
+    def __init__(self, browser_wrapper=BrowserWrapper()):
         self._connected = False
         self._current_html = None
-        self._url_opener = url_opener
+        self._browser_wrapper = browser_wrapper
         self._browser = StatefulBrowser()
         self._browser.addHeaders = [
-                ('User-Agent', 'Mozilla/5.0 (Linux; Android 7.0; PLUS ' +
-                'Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) ' +
-                'Chrome/61.0.3163.98 Mobile Safari/537.36'), \
+                ('User-Agent', 'Firefox'), \
                 ('Accept-Language', 'en-US,en;q=0.5')
                 ]
 
@@ -35,14 +33,18 @@ class Session:
     def __exit__(self, exc_type, exc_value, traceback):
         self._dispose()
 
+    @property
+    def connected(self):
+        return self._connected
+
     def log_in(self, username, password):
         try:
             # Log in to non-mobile site is more reliable
-            self._url_opener.open(self._browser, "https://www.facebook.com")
+            self._browser_wrapper.open(self._browser, 'https://www.facebook.com')
             self._browser.select_form('form[id="login_form"]')
             self._browser['email'] = username
             self._browser['pass'] =  password        
-            self._browser.submit_selected()
+            self._browser_wrapper.submit_selected(self._browser)
             # Check if we really are in account profile page
             if self._browser.get_current_page().find('form',
                 action='/search/top/'):
@@ -60,7 +62,7 @@ class Session:
         """Retrieve informations for a given profile."""
         self._ensure_connected()
         try:
-            self._url_opener.open(self._browser, f'{Session.BASE_URL}/{id_}')
+            self._browser_wrapper.open(self._browser, f'{Session.BASE_URL}/{id_}')
             name  = self._sanitize_title(
                 self._browser.get_current_page().find('title').text)
             image = parse_image(name, self._browser.get_current_page())
@@ -77,7 +79,7 @@ class Session:
         self._ensure_connected()
         try:
             url_query = '+'.join(query.split())
-            self._url_opener.open(self._browser, f'{Session.BASE_URL}/search/top/?q={url_query}')
+            self._browser_wrapper.open(self._browser, f'{Session.BASE_URL}/search/top/?q={url_query}')
             return parse_search(self._browser.get_current_page())
         except:
             return None
