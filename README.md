@@ -20,9 +20,9 @@ $ python3 -m pip install .
 >>> import facebook_snooper
 >>> fb = facebook_snooper.default_session()
 >>> fb
-<facebook_snooper.core.session.FacebookSession object at 0x106f64590>
+<facebook_snooper.core.session.Session object at 0x1075898d0>
 >>> fb.log_in('user@email.com', 'user_password')
-<facebook_snooper.core.session.FacebookSession object at 0x106f64590>
+<facebook_snooper.core.session.Session object at 0x1075898d0>
 >>> fb.search('frank new york')
 ('frankdecaro',
   ['Frank DeCaro', 'Author at Rizzoli New York',
@@ -39,6 +39,33 @@ $ python3 -m pip install .
 >>> info
 ['The New York Times', 'Columbia University', 'UNC Chapel Hill', 'Loomis Chaffee',
  'Loomis Chaffee, Windsor, Conn.', 'New York', 'White Plains']
+```
+
+## Test
+Create test directory and data:
+```sh
+$ cd facebook-snooper
+$ mkdir tests/pages
+```
+```python
+>>> import facebook_snooper 
+>>> from tests.persistence import save_login, save_current_page
+>>> fb = facebook_snooper.default_session()
+>>> save_login('login')
+>>> fb.log_in('user@email.com', 'user_password')
+...
+>>> utils.save_page('logged', fb.current_html
+>>> fb.search('frank new york')
+...
+>>> utils.save_page('search', fb.current_html)
+>>> fb.profile_info('frankbruninyt')
+...
+>>> utils.save_page('profile', fb.current_html)
+
+```
+Execute tests:
+```sh
+$ python3 tests/session.py
 ```
 
 ### Disclaimer
