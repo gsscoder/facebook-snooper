@@ -1,3 +1,8 @@
+__all__ = [
+    'LogInError',
+    'NotConnectedError'
+    ]
+
 class LogInError(Exception):
     pass
 
