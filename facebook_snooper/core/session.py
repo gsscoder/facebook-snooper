@@ -37,7 +37,7 @@ class Session:
 
     def log_in(self, username, password):
         try:
-            self._url_opener.open(self._browser, Session.BASE_URL)
+            self._url_opener.open(self._browser, "https://www.facebook.com")
             self._browser.select_form('form[id="login_form"]')
             self._browser['email'] = username
             self._browser['pass'] =  password        
