@@ -1,11 +1,8 @@
 import os.path
 from abc import abstractmethod
 from mechanicalsoup import StatefulBrowser
-from .exceptions import LogInError, \
-                        NotConnectedError
-from ._parser import parse_image, \
-                     parse_info, \
-                     parse_search
+from .exceptions import LogInError, NotConnectedError
+from ._parser import parse_image, parse_info, parse_search
 
 
 __all__ = [
