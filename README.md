@@ -1,3 +1,5 @@
+![fb-snooper logo](https://user-images.githubusercontent.com/1194228/69556500-1ab03f00-0fa5-11ea-867a-c4c897ea17ff.png)
+
 # Facebook Snooper
 
 Scrapes Facebook profile pages and searches profiles using a normal log in (without an API key). Inspired by [facebook-scraper](https://github.com/kevinzg/facebook-scraper). Built with [MechanicalSoup](https://github.com/MechanicalSoup/MechanicalSoup).
