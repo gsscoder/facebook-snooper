@@ -53,16 +53,16 @@ $ mkdir tests/pages
 >>> import facebook_snooper 
 >>> from tests.persistence import save_login, save_current_page
 >>> fb = facebook_snooper.init_session()
->>> save_login('login')
+>>> save_login(fb)
 >>> fb.log_in('user@email.com', 'user_password')
 ...
->>> utils.save_page('logged', fb.current_html
+>>> save_current_page(fb, 'logged')
 >>> fb.search('frank new york')
 ...
->>> utils.save_page('search', fb.current_html)
+>>> save_current_page(fb, 'search')
 >>> fb.profile_info('frankbruninyt')
 ...
->>> utils.save_page('profile', fb.current_html)
+>>> save_current_page(fb, 'profile')
 
 ```
 Execute tests:
