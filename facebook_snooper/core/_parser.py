@@ -1,4 +1,4 @@
-def parse_image(name, page):
+def parse_image(page, name):
     image_link = ''
     matches = page.find_all('img', alt=name)
     if len(matches) > 0:
@@ -6,16 +6,18 @@ def parse_image(name, page):
         image_link = image.attrs['src'] if 'src' in image.attrs else ''
     return image_link
 
+
 def parse_info(page):
     items = \
-        _parse_info('work', page)
+        _parse_info(page, 'work')
     items.extend(
-        _parse_info('education', page))
+        _parse_info(page, 'education'))
     items.extend(
-        _parse_info('living', page))
+        _parse_info(page, 'living'))
     return items
 
-def parse_search(page):
+
+def parse_search(page, base_url):
     matches = page.find_all('div', attrs={'id': 'BrowseResultsContainer'})
     if len(matches) == 0:
         return []
@@ -25,7 +27,7 @@ def parse_search(page):
         if 'href' in a.attrs:
             href = a.attrs['href']
             id_ = _get_profile_id(href)
-            link = f'https://m.facebook.com{href}'
+            link = f'{base_url}{href}'
             texts = []
             for div in a.find_all('div'):
                 text = div.get_text()
@@ -37,7 +39,8 @@ def parse_search(page):
                 results.append((id_, texts, link))
     return results
 
-def _parse_info(type_, page):
+
+def _parse_info(page, type_):
     texts = []
     matches = page.find_all('div', attrs={'id': type_})
     if len(matches) > 0:
@@ -47,7 +50,8 @@ def _parse_info(type_, page):
             if link.get_text():
                 texts.append(text)
     return texts
-    
+
+
 def _get_profile_id(uri_part):
     import re
     matches = re.findall(r'(?<=\=).+?(?=&)', uri_part)

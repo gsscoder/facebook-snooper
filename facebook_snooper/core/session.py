@@ -20,7 +20,7 @@ class Session:
         self._browser_wrapper = browser_wrapper
         self._browser = StatefulBrowser()
         self._browser.addHeaders = [
-                ('User-Agent', 'Firefox'), \
+                ('User-Agent', 'Firefox'),
                 ('Accept-Language', 'en-US,en;q=0.5')
                 ]
 
@@ -65,7 +65,7 @@ class Session:
             self._browser_wrapper.open(self._browser, f'{Session.BASE_URL}/{id_}')
             name  = self._sanitize_title(
                 self._browser.get_current_page().find('title').text)
-            image = parse_image(name, self._browser.get_current_page())
+            image = parse_image(self._browser.get_current_page(), name)
             info = parse_info(self._browser.get_current_page())
             return name, image, info
         except:
@@ -79,8 +79,10 @@ class Session:
         self._ensure_connected()
         try:
             url_query = '+'.join(query.split())
-            self._browser_wrapper.open(self._browser, f'{Session.BASE_URL}/search/top/?q={url_query}')
-            return parse_search(self._browser.get_current_page())
+            self._browser_wrapper.open(self._browser,
+                f'{Session.BASE_URL}/search/top/?q={url_query}')
+            return parse_search(self._browser.get_current_page(),
+                Session.BASE_URL)
         except:
             return None
 
