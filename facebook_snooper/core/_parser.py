@@ -33,7 +33,8 @@ def parse_search(page, base_url):
                 text = div.get_text()
                 # Avoid duplicates
                 if len(text) > 0 and text not in texts and \
-                    '/groups/' not in href and '/events/' not in href:
+                    '/groups/' not in href and '/events/' not in href \
+                    and '/video_redirect/' not in href:
                     texts.append(text)
             if len(texts) > 0:
                 results.append((id_, texts, link))
@@ -54,10 +55,18 @@ def _parse_info(page, type_):
 
 def _get_profile_id(uri_part):
     import re
-    matches = re.findall(r'(?<=\=).+?(?=&)', uri_part)
+    # m.facebook.com/profile.php?id=[profile.id]
+    # m.facebook.com/profile.php?id=[profile.id]?refid=n
+    # m.facebook.com/profile.php?id=[profile.id]&refid=n
+    matches = re.findall(r'(?<=\?id=).+?(?=$|\?|&)', uri_part)
     if matches:
         return matches[0]
-    matches = re.findall(r'(?<=/).+?(?=\?)', uri_part)
+
+    # m.facebook.com/[profile.id]
+    # m.facebook.com/[profile.id]/?refid=n
+    # m.facebook.com/[profile.id]?refid=n
+    # m.facebook.com/[profile.id]&refid=n
+    matches = re.findall(r'(?<=/).*?(?=$|/|\?|&)', uri_part)
     if matches:
         return matches[0]
     return ''

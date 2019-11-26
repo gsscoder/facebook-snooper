@@ -76,11 +76,12 @@ class Session:
         Execute search of a given text returning a tuple with ID,
         descriptions and URI.
         """
-        self._ensure_connected()
+        url_query = '+'.join(query.split())
+        url_path = f'/search/top/?q={url_query}' \
+            if self._connected else f'/public/{url_query}'
         try:
-            url_query = '+'.join(query.split())
             self._browser_wrapper.open(self._browser,
-                f'{Session.BASE_URL}/search/top/?q={url_query}')
+                f'{Session.BASE_URL}{url_path}{url_query}')
             return parse_search(self._browser.get_current_page(),
                 Session.BASE_URL)
         except:
