@@ -27,7 +27,7 @@ def parse_search(page, base_url):
         if 'href' in a.attrs:
             href = a.attrs['href']
             id_ = _get_profile_id(href)
-            link = f'{base_url}{href}'
+            link = href if 'http' in href else f'{base_url}{href}'
             texts = []
             for div in a.find_all('div'):
                 text = div.get_text()
