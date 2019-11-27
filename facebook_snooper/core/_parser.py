@@ -1,8 +1,7 @@
 def parse_image(page, name):
     image_link = ''
-    matches = page.find_all('img', alt=name)
-    if len(matches) > 0:
-        image = matches[0]
+    image = page.select_one(f"img[alt='{name}']")
+    if image:
         image_link = image.attrs['src'] if 'src' in image.attrs else ''
     return image_link
 
