@@ -42,12 +42,11 @@ def parse_search(page, base_url):
 
 def _parse_info(page, type_):
     texts = []
-    matches = page.find_all('div', attrs={'id': type_})
-    if len(matches) > 0:
-        links = matches[0].find_all('a')
-        for link in links:
+    div = page.select_one(f'div#{type_}')
+    if div:
+        for link in div.find_all('a'):
             text = link.get_text()
-            if link.get_text():
+            if text:
                 texts.append(text)
     return texts
 
