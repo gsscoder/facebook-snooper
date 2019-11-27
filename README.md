@@ -37,10 +37,14 @@ $ python3 -m pip install .
 >>> name
 'Frank Bruni'
 >>> image_link
-'https://scontent-fco1-1.xx.fbcdn.net/v/t1.0-1/cp0/e15/q65/p74x74/49342020_10157005134417363_1173260116078624768_o.jpg?_nc_cat=101&efg=eyJpIjoiYiJ9&_nc_ohc=ePuavjZLTc8AQls2sbe1iRxIb0rjQZhCDHdeGew-nC-OLozFtw768yIAg&_nc_ht=scontent-fco1-1.xx&oh=14a30cde6126c807eba801a07cfbf316&oe=5E7B9A5F'
+'https://scontent-fco1-1.xx.fbcdn.net/v/t1.0-1/cp0/e15/q65/p74x74/
+49342020_10157005134417363_1173260116078624768_o.jpg?_nc_cat=101&efg=eyJpIjoiYiJ9&
+_nc_ohc=ePuavjZLTc8AQls2sbe1iRxIb0rjQZhCDHdeGew-nC-OLozFtw768yIAg&_nc_ht=scontent-
+fco1-1.xx&oh=14a30cde6126c807eba801a07cfbf316&oe=5E7B9A5F'
 >>> info
-['The New York Times', 'Columbia University', 'UNC Chapel Hill', 'Loomis Chaffee',
- 'Loomis Chaffee, Windsor, Conn.', 'New York', 'White Plains']
+[('work', 'The New York Times'), ('education', 'Columbia University'),
+ ('education', 'UNC Chapel Hill'), ('education', 'Loomis Chaffee'), ('education',
+ 'Loomis Chaffee, Windsor, Conn.'), ('living', 'New York'), ('living', 'White Plains')]
 ```
 
 ## Test

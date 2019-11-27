@@ -1,3 +1,17 @@
+__all__ = [
+    'InfoTypes'
+]
+
+
+class InfoTypes:
+    WORK_INFO = 'work'
+    EDUCATION_INFO = 'education'
+    LIVING_INFO = 'living'
+
+    def __init__(self):
+        pass
+
+
 def parse_image(page, name):
     image_link = ''
     image = page.select_one(f"img[alt='{name}']")
@@ -8,11 +22,11 @@ def parse_image(page, name):
 
 def parse_info(page):
     items = \
-        _parse_info(page, 'work')
+        _parse_info(page, InfoTypes.WORK_INFO)
     items.extend(
-        _parse_info(page, 'education'))
+        _parse_info(page, InfoTypes.EDUCATION_INFO))
     items.extend(
-        _parse_info(page, 'living'))
+        _parse_info(page, InfoTypes.LIVING_INFO))
     return items
 
 
@@ -40,14 +54,14 @@ def parse_search(page, base_url):
 
 
 def _parse_info(page, type_):
-    texts = []
+    infos = []
     div = page.select_one(f'div#{type_}')
     if div:
         for link in div.find_all('a'):
             text = link.get_text()
             if text:
-                texts.append(text)
-    return texts
+                infos.append((type_, text))
+    return infos
 
 
 def _get_profile_id(uri_part):
