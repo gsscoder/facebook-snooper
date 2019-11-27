@@ -17,11 +17,10 @@ def parse_info(page):
 
 
 def parse_search(page, base_url):
-    matches = page.find_all('div', attrs={'id': 'BrowseResultsContainer'})
-    if len(matches) == 0:
+    container = page.select_one('div#BrowseResultsContainer')
+    if not container:
         return []
     results = []
-    container = matches[0]
     for a in container.find_all('a'):
         if 'href' in a.attrs:
             href = a.attrs['href']
