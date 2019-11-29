@@ -12,6 +12,16 @@ class InfoTypes:
         pass
 
 
+class ResultTypes:
+    PROFILE = 'profile'
+    GROUP = 'group'
+    EVENT = 'event'
+    VIDEO = 'video'
+
+    def __init__(self):
+        pass
+
+
 def parse_image(page, name):
     image_link = ''
     image = page.select_one(f"img[alt='{name}']")
@@ -38,18 +48,18 @@ def parse_search(page, base_url):
     for a in container.find_all('a'):
         if 'href' in a.attrs:
             href = a.attrs['href']
-            id_ = _get_profile_id(href)
+            type_ = _get_profile_type(href)
+            id_ = _get_profile_id(href) \
+                if type_ == ResultTypes.PROFILE else ''
             link = href if 'http' in href else f'{base_url}{href}'
             texts = []
             for div in a.find_all('div'):
                 text = div.get_text()
                 # Avoid duplicates
-                if len(text) > 0 and text not in texts and \
-                    '/groups/' not in href and '/events/' not in href \
-                    and '/video_redirect/' not in href:
+                if len(text) > 0 and text not in texts:
                     texts.append(text)
             if len(texts) > 0:
-                results.append((id_, texts, link))
+                results.append((type_, id_, texts, link))
     return results
 
 
@@ -81,3 +91,13 @@ def _get_profile_id(uri_part):
     if matches:
         return matches[0]
     return ''
+
+
+def _get_profile_type(uri_part):
+    if '/groups/' in uri_part:
+        return ResultTypes.GROUP
+    elif '/events/' in uri_part:
+        return ResultTypes.EVENT
+    elif '/video_redirect/' in uri_part:
+        return ResultTypes.VIDEO
+    return ResultTypes.PROFILE
