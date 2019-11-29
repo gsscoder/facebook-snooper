@@ -20,28 +20,31 @@ $ python3 -m pip install .
 ## Usage
 ```python
 >>> import facebook_snooper
+>>> from facebook_snooper.dump import dump_search, dump_info
 >>> fb = facebook_snooper.init_session()
->>> fb
-<facebook_snooper.core.session.Session object at 0x1075898d0>
->>> fb.log_in('user@email.com', 'user_password')
-<facebook_snooper.core.session.Session object at 0x1075898d0>
->>> fb.search('frank new york')
-('frankdecaro',
-  ['Frank DeCaro', 'Author at Rizzoli New York',
-   'Freelance Writer at The New York Times'],
-  'https://m.facebook.com/frankdecaro?refid=46')
-('frankbruninyt',
-  ['Frank Bruni', 'The New York Times', 'New York, New York'],
-  'https://m.facebook.com/frankbruninyt?refid=46')
->>> name, image_link, info = fb.profile_info('frankbruninyt')
->>> name
-'Frank Bruni'
->>> image_link
-'https://scontent-fco1-1.xx.fbcdn.net/...0cde6126c807eba801a07cfbf316&oe=5E7B9A5F'
->>> info
-[('work', 'The New York Times'), ('education', 'Columbia University'),
- ('education', 'UNC Chapel Hill'), ('education', 'Loomis Chaffee'), ('education',
- 'Loomis Chaffee, Windsor, Conn.'), ('living', 'New York'), ('living', 'White Plains')]
+>>> fb.log_in('user@account.com', 'user_password')
+<facebook_snooper.core.session.Session object at 0x10ffc58d0>
+>>> results = fb.search('frank new york')
+>>> dump_search(results, pretty=True)
+profile frankdecaro https://m.facebook.com/frankdecaro?refid=46
+  Frank DeCaro
+  Author at Rizzoli New York
+  Freelance Writer at The New York Times
+profile frankbruninyt https://m.facebook.com/frankbruninyt?refid=46
+  Frank Bruni
+  The New York Times
+  New York, New York
+>>> info = fb.profile_info('frankbruninyt')
+>>> dump_info(info, pretty=True)
+Frank Bruni
+Image: https://scontent-fco1-1.xx.fbcdn.net/v/t1.0-1/cp0/e15/q65/p120x120/49...
+  work The New York Times
+  education Columbia University,
+  education UNC Chapel Hill
+  education Loomis Chaffee
+  education Loomis Chaffee, Windsor, Conn.
+  living New York
+  living White Plains
 ```
 
 ## Test
