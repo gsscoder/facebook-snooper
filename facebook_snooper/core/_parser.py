@@ -4,8 +4,8 @@ __all__ = [
 
 
 class InfoTypes:
-    WORK_INFO = 'work'
-    EDUCATION_INFO = 'education'
+    WORK = 'work'
+    EDUCATION = 'education'
     LIVING_INFO = 'living'
 
     def __init__(self):
@@ -32,9 +32,9 @@ def parse_image(page, name):
 
 def parse_info(page):
     items = \
-        _parse_info(page, InfoTypes.WORK_INFO)
+        _parse_info(page, InfoTypes.WORK)
     items.extend(
-        _parse_info(page, InfoTypes.EDUCATION_INFO))
+        _parse_info(page, InfoTypes.EDUCATION))
     items.extend(
         _parse_info(page, InfoTypes.LIVING_INFO))
     return items
