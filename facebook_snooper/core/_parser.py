@@ -1,12 +1,13 @@
 __all__ = [
-    'InfoTypes'
+    'InfoTypes',
+    'ResultTypes'
 ]
 
 
 class InfoTypes:
     WORK = 'work'
     EDUCATION = 'education'
-    LIVING_INFO = 'living'
+    LIVING = 'living'
 
     def __init__(self):
         pass
@@ -36,7 +37,7 @@ def parse_info(page):
     items.extend(
         _parse_info(page, InfoTypes.EDUCATION))
     items.extend(
-        _parse_info(page, InfoTypes.LIVING_INFO))
+        _parse_info(page, InfoTypes.LIVING))
     return items
 
 
