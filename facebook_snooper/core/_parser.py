@@ -51,15 +51,17 @@ def parse_search(page, base_url):
             href = a.attrs['href']
             type_ = _get_profile_type(href)
             id_ = _get_profile_id(href) \
-                if type_ == ResultTypes.PROFILE else ''
+                if type_ == ResultTypes.PROFILE else None
             link = href if 'http' in href else f'{base_url}{href}'
             texts = []
-            for div in a.find_all('div'):
-                text = div.get_text()
-                # Avoid duplicates
-                if len(text) > 0 and text not in texts:
-                    texts.append(text)
-            if len(texts) > 0:
+            # Video lacks profile ID and descriptions
+            if type_ != ResultTypes.VIDEO:          
+                for div in a.find_all('div'):
+                    text = div.get_text()
+                    # Avoid duplicates
+                    if len(text) > 0 and text not in texts:
+                        texts.append(text)
+            if len(texts) > 0 or type_ == ResultTypes.VIDEO:
                 results.append((type_, id_, texts, link))
     return results
 
