@@ -5,22 +5,51 @@ __all__ = [
 
 
 class InfoTypes:
-    WORK = 'work'
-    EDUCATION = 'education'
-    LIVING = 'living'
+    WORK = 0
+    EDUCATION = 1
+    LIVING = 2
 
     def __init__(self):
         pass
+
+    @staticmethod
+    def tostring(type_):
+        if type_ == InfoTypes.WORK:
+            return 'work'
+        elif type_ == InfoTypes.EDUCATION:
+            return 'education'
+        elif type_ == InfoTypes.LIVING:
+            return 'living'
+
+    @staticmethod
+    def fromstring(str_):
+        if str_ == 'work':
+            return InfoTypes.WORK
+        elif str_ == 'education':
+            return InfoTypes.EDUCATION
+        elif str_ == 'living':
+            return InfoTypes.LIVING
 
 
 class ResultTypes:
-    PROFILE = 'profile'
-    GROUP = 'group'
-    EVENT = 'event'
-    VIDEO = 'video'
+    PROFILE = 0
+    GROUP = 1
+    EVENT = 2
+    VIDEO = 3
 
     def __init__(self):
         pass
+
+    @staticmethod
+    def tostring(type_):
+        if type_ == ResultTypes.PROFILE:
+            return 'profile'
+        elif type_ == ResultTypes.GROUP:
+            return 'group'
+        elif type_ == ResultTypes.EVENT:
+            return 'event'
+        elif type_ == ResultTypes.VIDEO:
+            return 'video'
 
 
 def parse_image(page, name):
@@ -33,11 +62,11 @@ def parse_image(page, name):
 
 def parse_info(page):
     items = \
-        _parse_info(page, InfoTypes.WORK)
+        _parse_info(page, 'work')
     items.extend(
-        _parse_info(page, InfoTypes.EDUCATION))
+        _parse_info(page, 'education'))
     items.extend(
-        _parse_info(page, InfoTypes.LIVING))
+        _parse_info(page, 'living'))
     return items
 
 
@@ -73,7 +102,7 @@ def _parse_info(page, type_):
         for link in div.find_all('a'):
             text = link.get_text()
             if text:
-                infos.append((type_, text))
+                infos.append((InfoTypes.fromstring(type_), text))
     return infos
 
 
