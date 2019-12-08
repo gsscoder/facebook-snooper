@@ -1,5 +1,6 @@
 from .core._parser import InfoTypes, ResultTypes
 
+
 def dump_search(data, pretty=False):
     for type_, id_, texts, link in data:
         type_ = ResultTypes.tostring(type_) if pretty else type_

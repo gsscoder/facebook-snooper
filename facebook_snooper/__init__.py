@@ -7,6 +7,3 @@ from .core._parser import InfoTypes, ResultTypes
 
 def init_session():
     return Session(BrowserWrapper())
-
-
-

@@ -1,6 +1,7 @@
 import os.path
 from abc import abstractmethod
 from mechanicalsoup import StatefulBrowser
+
 from .exceptions import LogInError, NotConnectedError
 from .wrapper import BrowserWrapper
 from ._parser import parse_image, parse_info, parse_search
