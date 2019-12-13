@@ -5,6 +5,7 @@
 Scrapes Facebook profile pages and searches profiles using a normal log in (without an API key). Inspired by [facebook-scraper](https://github.com/kevinzg/facebook-scraper). Built with [MechanicalSoup](https://github.com/MechanicalSoup/MechanicalSoup).
 
 ## Install
+
 **NOTE**: Python 3.7 or higher is required.
 ```sh
 # clone the repository
@@ -18,6 +19,7 @@ $ python3 -m pip install .
 ```
 
 ## Usage
+
 ```python
 >>> import facebook_snooper
 >>> from facebook_snooper.dump import dump_search, dump_info
@@ -48,6 +50,7 @@ Image: https://scontent-fco1-1.xx.fbcdn.net/v/t1.0-1/cp0/e15/q65/p120x120/49...
 ```
 
 ## Test
+
 Create test directory and data:
 ```sh
 $ cd facebook-snooper
@@ -75,9 +78,11 @@ $ python3 tests/session.py
 ```
 
 ### Disclaimer
+
 - This package cannot gather nothing more that is publicly visible.
 - Please respect people's privacy and use it ethically.
 
 ### Notes
+
 - This is a pre-release, since it's under development API can change until stable version.
 - There is no guarantee that will work if scraped pages change too much.
