@@ -6,7 +6,7 @@ from facebook_snooper.__version__ import __version__
 # Package meta-data
 NAME = 'facebook-snooper'
 DESCRIPTION = 'Scrapes Facebook profile pages and searches profiles using a normal log in (without an API key).'
-URL = 'https://github.com/bisguzar/twitter-scraper'
+URL = 'https://github.com/gsscoder/facebook-snooper'
 EMAIL = 'gsscoder@gmail.com'
 AUTHOR = 'Giacomo Stelluti Scala'
 VERSION = __version__
