@@ -7,6 +7,8 @@ Scrapes Facebook profile pages and searches profiles using a normal log in (with
 ## Install
 
 **NOTE**: Python 3.7 or higher is required.
+
+To install facebook_snooper from source, follow these steps:
 ```sh
 # clone the repository
 $ git clone https://github.com/gsscoder/facebook-snooper.git
@@ -15,7 +17,12 @@ $ git clone https://github.com/gsscoder/facebook-snooper.git
 $ cd facebook-snooper
 
 # install the package
-$ python3 -m pip install .
+$ pip install .
+```
+
+You can also install with PyPI:
+```sh
+$ pip install facebook_snooper
 ```
 
 ## Usage
