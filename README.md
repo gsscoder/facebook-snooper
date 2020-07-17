@@ -81,7 +81,7 @@ $ mkdir tests/pages
 ```
 Execute tests:
 ```sh
-$ python3 tests/session.py
+$ python tests/session.py
 ```
 
 ### Disclaimer
