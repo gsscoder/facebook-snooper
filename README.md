@@ -91,5 +91,4 @@ $ python tests/session.py
 
 ### Notes
 
-- This is a pre-release, since it's under development API can change until stable version.
 - There is no guarantee that will work if scraped pages change too much.
