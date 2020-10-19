@@ -42,9 +42,11 @@ class Session:
         try:
             # Log in to non-mobile site is more reliable
             self._browser_wrapper.open(self._browser, 'https://www.facebook.com')
-            self._browser.select_form('form[id="login_form"]')
+            self._browser.select_form('div[class="_6lux"]:has(> input[name="email"])')
             self._browser['email'] = username
-            self._browser['pass'] =  password        
+            self._browser.select_form('div[class="_6lux"]:has(> input[name="pass"])')
+            self._browser['pass'] =  password
+            self._browser.select_form('div[class="_6ltg"]')        
             self._browser_wrapper.submit_selected(self._browser)
             # Check if we really are in account profile page
             if self._browser.get_current_page().find('form',
