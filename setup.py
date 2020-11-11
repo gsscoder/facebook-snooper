@@ -8,7 +8,7 @@ DESCRIPTION = 'Scrapes Facebook profile pages and searches profiles using a norm
 URL = 'https://github.com/gsscoder/facebook-snooper'
 EMAIL = 'gsscoder@gmail.com'
 AUTHOR = 'Giacomo Stelluti Scala'
-VERSION = '0.5.11'
+VERSION = '0.5.14'
 
 # Required packages
 REQUIRED = [

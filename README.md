@@ -21,6 +21,7 @@ $ pip install .
 ```
 
 You can also install with PyPI:
+
 ```sh
 $ pip install facebook_snooper
 ```
@@ -59,10 +60,12 @@ Image: https://scontent-fco1-1.xx.fbcdn.net/v/t1.0-1/cp0/e15/q65/p120x120/49...
 ## Test
 
 Create test directory and data:
+
 ```sh
 $ cd facebook-snooper
 $ mkdir tests/pages
 ```
+
 ```python
 >>> import facebook_snooper 
 >>> from tests.persistence import save_login, save_current_page
@@ -79,7 +82,9 @@ $ mkdir tests/pages
 >>> save_current_page(fb, 'profile')
 
 ```
+
 Execute tests:
+
 ```sh
 $ python tests/session.py
 ```
@@ -92,3 +97,7 @@ $ python tests/session.py
 ### Notes
 
 - There is no guarantee that will work if scraped pages change too much.
+
+### Contributors
+
+- Andrew Polukhin ([pandrey2003](https://github.com/pandrey2003))
